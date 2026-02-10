@@ -1,0 +1,180 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{geometry}
+\usepackage{titlesec}
+\geometry{a4paper, margin=1in}
+
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{3d, arrows.meta}
+
+% Theorem environments
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+
+% Paragraph formatting
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{1em}
+
+% Add extra vertical space
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+\title{Chapter 04:  sequences and series of functions }
+\author{Notes from prof zeglaoui course}
+
+\hbadness=10000
+\hfuzz=\maxdimen
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\F}{\mathbb{F}}
+
+% --- Derivatives ---
+\newcommand{\pd}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[3]{\dfrac{\partial^2 #1}{\partial #2\,\partial #3}}
+\newcommand{\pddx}[2]{\dfrac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\dd}[2]{\dfrac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\ddd}[2]{\dfrac{\mathrm{d}^2 #1}{\mathrm{d} #2^2}}
+\newcommand{\diff}{\,\mathrm{d}}
+
+%% vertical vector macro
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+
+\begin{document}
+
+\maketitle
+
+\vspace{2em}
+
+\section{Sequences of functions}
+\subsection{Convergence of a sequence of functions}
+
+\begin{definition}
+  
+  Let $D$ be a subset (non-empty) of $\R$, if we denote by (fancy) $\mathcal{F}(D,\R)$ the $\R$ vector space of real functions from $D \to \R$.
+
+  A sequence of functions over $D$ is a sequence in $\mathcal{F}(D,R)$ that is :
+
+  \[ \N \to \mathcal{F}(D,\R)\quad , \text{which is often denoted}\]
+  \[ n \mapsto f_n:
+    \begin{aligned}
+    \begin{cases}
+     D \to \R \\
+     x \mapsto f_n(x)
+    \end{cases}
+    \end{aligned}
+  , \text{by $(f_n)$ or $(f_n)_{n \in \N}$}
+\]
+\end{definition}
+
+\begin{definition}
+
+   Let $(f_n)$ be a sequence of functions over $D$; we
+   say that $(f_n)$ positive convergente, or simply 
+   converges to $f \in \mathcal{F} \to (D, \R)$, if :
+
+   \[ \forall x \in D; \lim\limits_{n \to + \infty}f_n(x) = f(x) \text{ or } (f_n) \xrightarrow{\text{ponctually converge}} f\]
+   \[ \Leftrightarrow \lim\limits_{n \to + \infty} f_n = f\]
+
+   \[
+     \forall x\in D, (\forall \epsilon > 0; \exists N = N(\epsilon,x) : \forall n \geq \N : \forall n \in \N ,
+     | f_n(x) - f(x)| < \epsilon)
+   \]
+\end{definition}
+
+\begin{example}
+...
+\begin{center}
+\includegraphics[width=0.8\textwidth]{geometric_sequence.jpg}
+\end{center}
+\end{example}
+
+\begin{definition}
+  \underline{Uniform convergence}
+
+  We say that $(f_n) \xrightarrow[D]{C.v} f$ if ;  
+  $\forall_n\in\N$; ($f_n - f$) is bounded over $D$ and 
+  $\lim\limits_{n \to + \infty} (sup_D |f_n -f |) = 0$
+
+  $\Leftrightarrow \epsilon > 0, \exists N = N(\epsilon) \mid \forall n \geq N, \forall x \in D,|f_n(x) -f(x) < \epsilon| $
+\end{definition}
+
+\textbf{Remark:} $(f_n) \xrightarrow[D]{C.V} f \implies (f_n) \xrightarrow[D]{P.V}f$ 
+
+\begin{example}
+...
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Uniform_ex_part1.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Uniform_ex_part2.jpg}
+\end{center}
+\end{example}
+
+\subsection{Properties of uniformly convergent sequences of functions}
+\begin{theorem} (continuity)
+
+  If 
+\[
+  \begin{aligned}
+    \begin{cases}
+      \exists N \in \N \mid \forall \geq N \quad f_n \text{ continuous on $D$} \\
+      \text{ and $(f_n) \xrightarrow[D]{C.V} f$} \\
+    \end{cases}
+    \text{then $f$ is continuous}
+  \end{aligned}
+\] 
+\[
+  \begin{aligned}
+    \forall x_0 \in D; \lim\limits_{x \to x_0} f(x) &= \lim\limits_{x \to x_0} (\lim\limits_{x \to x_0} f_n(x) ) \\
+                                                    &=\lim\limits_{x \to x_0}(\lim\limits_{x \to x_0} )  = f(x_0)
+  \end{aligned}
+\]
+\end{theorem}
+
+\textbf{Remark:}
+if $(f_n) \xrightarrow[D]{P.C} f\text{ and }(x_n) \subset D \mid \lim\limits_{x \to + \infty}\left[f_n(x_n) - f(x_n)\right] \neq 0 $ then  $(f_n)_{n \in \N}$ does not unifromly convergent to $f$ on $D$ because :
+\[
+  (f_n) \xrightarrow[D]{C.V} f \implies \forall (x_n) \subset D : \lim\limits_{x \to + \infty}\left[f_n(x_n) - f(x_n)\right] = 0  
+\]
+\begin{example}
+..
+\begin{center}
+\includegraphics[width=0.8\textwidth]{4_1_2_ex01.jpg}
+\end{center}
+\end{example}
+
+\begin{theorem} \underline{ (integrability)}
+
+  if $f_n : \left[a,b\right] \to \R$ is Riemann-integrable, $\forall n \in N$ and 
+  $(f_n) \xrightarrow[D]{C.V} f$; then :
+  \[
+    \lim\limits_{n \to + \infty} \int_a^b f_n(x)dx = \int_a^b f(x)dx = \int_a^b (\lim\limits_{n \to + \infty}f_n(x))dx
+  \]
+\end{theorem}
+\textbf{proof:}
+
+\[
+  \begin{aligned}
+    |\int_a^b f_n(x)dx - \int_a^b f(x) dx| &= |\int_a^b (f_n(x) -f(x))dx| \\
+                                           & \leq \int_a^b |f_n(x) -f(x)| dx \\
+                                           & \leq (sup_{\left[a,b\right]}(f_n -f))(b-a) \xrightarrow[n \to +\infty]{}      0
+  \end{aligned}
+\]
+
+\end{document}

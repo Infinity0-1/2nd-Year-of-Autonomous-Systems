@@ -1,0 +1,410 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{graphicx}
+
+\geometry{a4paper, margin=1in}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{3d, arrows.meta}
+
+% Theorem environments
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+
+% Paragraph formatting
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{1em}
+
+% Add extra vertical space
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+\title{Chapter 04: Sequences of Functions}
+\author{Notes from Prof. Zeglaoui's Course}
+
+\hbadness=10000
+\hfuzz=\maxdimen
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\F}{\mathbb{F}}
+
+\newcommand{\pd}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[3]{\dfrac{\partial^2 #1}{\partial #2\,\partial #3}}
+\newcommand{\pddx}[2]{\dfrac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\dd}[2]{\dfrac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\ddd}[2]{\dfrac{\mathrm{d}^2 #1}{\mathrm{d} #2^2}}
+\newcommand{\diff}{\,\mathrm{d}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\begin{document}
+
+\maketitle
+
+\vspace{2em}
+
+\section{Sequences of Functions}
+
+\subsection{Convergence of a Sequence of Functions}
+
+\begin{definition}
+Let \(D\) be a subset (non-empty) of \(\mathbb{R}\). We denote by \(\mathcal{F}(D,\mathbb{R})\) the \(\mathbb{R}\)-vector space of real functions from \(D\to \mathbb{R}\).
+
+A \textbf{sequence of functions} over \(D\) is a sequence in \(\mathcal{F}(D,\mathbb{R})\), i.e.:
+\[
+\mathbb{N}\to \mathcal{F}(D,\mathbb{R}), \quad n\mapsto f_n:\begin{cases}
+D\to \mathbb{R}\\
+x\mapsto f_n(x)
+\end{cases}
+\]
+It is often denoted by \((f_n)\) or \((f_n)_{n\in \mathbb{N}}\).
+\end{definition}
+
+\begin{definition}
+Let \((f_n)\) be a sequence of functions over \(D\). We say that \((f_n)\) \textbf{pointwise converges}, or simply \textbf{converges}, to \(f\in \mathcal{F}(D,\mathbb{R})\) if:
+\[
+\forall x\in D,\; \lim_{n\to +\infty}f_n(x) = f(x)
+\]
+or equivalently, \((f_n) \xrightarrow{\mathrm{pointwise}} f\).
+
+In logical form:
+\[
+\forall x\in D,\;\forall \epsilon >0,\;\exists N = N(\epsilon ,x):\forall n\geq N,\;|f_n(x) - f(x)|< \epsilon.
+\]
+\end{definition}
+
+\begin{example}
+...
+
+\begin{center}
+--\includegraphics[width=0.8\textwidth]{geometric_sequence.jpg}
+\end{center}
+
+\end{example}
+
+% IMAGE PLACEHOLDER 1 (from Page 2)
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=0.8\textwidth]{image1.png}
+% \caption{Illustration of convergence}
+% \end{figure}
+
+\begin{definition}[Uniform Convergence]
+We say that \((f_n) \xrightarrow{C_V} f\) if for all \(n \in \mathbb{N}\), \((f_n - f)\) is bounded over \(D\) and
+\[
+\lim_{n \to +\infty} \left( \sup_{D} |f_n - f| \right) = 0.
+\]
+Equivalently:
+\[
+\forall \epsilon >0,\;\exists N = N(\epsilon):\forall n\geq N,\;\forall x\in D,\;|f_n(x) - f(x)| < \epsilon.
+\]
+\end{definition}
+
+\begin{remark}
+Uniform convergence implies pointwise convergence: \((f_n) \xrightarrow{C_V} f \Rightarrow (f_n) \xrightarrow{P_V} f\).
+\end{remark}
+
+\begin{example}
+...
+\begin{center}
+--\includegraphics[width=0.8\textwidth]{Uniform_ex_part1.jpg}
+\end{center}
+
+\begin{center}
+--\includegraphics[width=0.8\textwidth]{Uniform_ex_part2.jpg}
+\end{center}
+\end{example}
+
+\subsection{Properties of Uniformly Convergent Sequences of Functions}
+
+\begin{theorem}[Continuity]
+If
+\[
+\begin{cases}
+\exists N\in \mathbb{N} \text{ such that } \forall n \geq N,\; f_n \text{ is continuous on } D,\\
+\text{and } (f_n) \xrightarrow{C.V} f \text{ on } D,
+\end{cases}
+\]
+then \(f\) is continuous on \(D\).
+
+In other words:
+\[
+\forall x_0\in D,\; \lim_{x\to x_0} f(x) = \lim_{x\to x_0} \left( \lim_{n\to +\infty} f_n(x) \right) = \lim_{n\to +\infty} \left( \lim_{x\to x_0} f_n(x_0) \right) = f(x_0).
+\]
+\end{theorem}
+
+\begin{remark}
+If \((f_n) \xrightarrow{P.C} f\) and there exists a sequence \((x_n) \subset D\) such that
+\[
+\lim_{n\to +\infty} [f_n(x_n) - f(x_n)] \neq 0,
+\]
+then \((f_n)\) does not converge uniformly to \(f\) on \(D\), because:
+\[
+(f_n) \xrightarrow{C.V} f \implies \forall (x_n) \subset D,\; \lim_{n\to +\infty} [f_n(x_n) - f(x_n)] = 0.
+\]
+\end{remark}
+
+\begin{example}
+...
+
+\begin{center}
+--\includegraphics[width=0.8\textwidth]{4_1_2_ex01.jpg}
+\end{center}
+\end{example}
+
+% IMAGE PLACEHOLDER 2 (from Page 3)
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=0.8\textwidth]{image2.png}
+% \caption{Graphical illustration}
+% \end{figure}
+
+\begin{theorem}[Integrability]
+If \(f_n:[a,b]\to \mathbb{R}\) is Riemann-integrable for all \(n\in \N\), and \((f_n) \xrightarrow{C.V} f\) on \([a,b]\), then:
+\[
+\lim_{n\to +\infty} \int_a^b f_n(x) \diff x = \int_a^b f(x) \diff x = \int_a^b \left( \lim_{n\to +\infty} f_n(x) \right) \diff x.
+\]
+\end{theorem}
+
+Proof:
+\[
+\begin{array}{r l r}
+\left| \int_{a}^{b} f_n(x) \diff x - \int_{a}^{b} f(x) \diff x \right| 
+&= \left| \int_{a}^{b} (f_n(x) - f(x)) \diff x \right| \\
+& \leq \int_{a}^{b} |f_n(x) - f(x)| \diff x \\
+& \leq \left( \sup_{[a,b]} |f_n - f| \right) (b-a) \xrightarrow[n\to+\infty]{} 0.
+\end{array}
+\]
+
+\begin{example}
+...
+
+\begin{center}
+--\includegraphics[width=0.8\textwidth]{integrability_part1.jpg}
+\end{center}
+
+\begin{center}
+--\includegraphics[width=0.8\textwidth]{integrability_part2.jpg}
+\end{center}
+\end{example}
+
+% IMAGE PLACEHOLDERS 3 & 4 (from Page 4)
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=0.8\textwidth]{image3.png}
+% \caption{First example figure}
+% \end{figure}
+
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=0.8\textwidth]{image4.png}
+% \caption{Second example figure}
+% \end{figure}
+
+\begin{theorem}[Differentiability]
+Let \(I\) be an interval and \((f_n)_n\) a sequence of class \(C^1\) functions on \(I\) such that:
+\[
+(f_n')_n \xrightarrow{C.V} g \quad \text{and} \quad \exists x_0 \in I \text{ such that the numerical sequence } f_n(x_0) \text{ converges to } l \in \R.
+\]
+Then \((f_n)_n\) converges uniformly to a function \(f\) on \(I\), where \(f\) is defined by:
+\[
+\begin{cases}
+f' = g,\\
+f(x_0) = l.
+\end{cases}
+\]
+Thus:
+\[
+\lim_{n\to +\infty} f_n'(x) = g(x) = f'(x) = \left( \lim_{n\to +\infty} f_n(x) \right)'.
+\]
+\end{theorem}
+
+\textbf{Proof:}
+\[
+f(x) = l + \int_{x_0}^x g(t) \diff t, \quad \forall x\in I.
+\]
+Recall that:
+\[
+f_n(x) = f_n(x_0) + \int_{x_0}^{x} f_n'(t) \diff t.
+\]
+Using the integrability theorem, we get:
+\[
+(f_n) \xrightarrow[I]{P.C} f,
+\]
+where P.C means pointwise continuous.
+
+\section{Convergence of series of functions}
+
+\begin{definition}[Series of functoin - convergence domain]
+  Let $(f_n)_n$ be a sequence of functions on $D$, When we consider the family of numerical series 
+  $\sum_{n \in \N}f_n(x)$, parametrized by $D$, we speak about  the series of functions $\sum_{n \in \N}f_n$
+
+  By convergence domain of $\sum f_n$ (point-wise convergence) , we mean the set 
+
+  $\{x \in D;\quad \sum_{n \in \N} f_n(x) \text{ converges}\}$
+
+  the sum of $\sum_{n \in \N} f_n$ is defined on the domain of convergence  by:
+
+  \[x \mapsto \sum_{n = 0}^{+\infty}=F(x) = \lim\limits_{n \to +\infty} F_n(x) \]
+
+  where 
+  \[
+  F_n = f_0 + f_1 + \dots + f_n  = \sum_{k = 0}^n f_k \]
+  \[
+    R_n = F- F_n = \sum_{k = n +1}^{+\infty} f_k \quad, \forall n \in \N
+  \]
+
+\end{definition}
+  \begin{example}
+
+    The geometric series $\sum_{n \in \N} x^n$
+
+    the geometric series is pointe-wise convergente  on $\left[-1,1\right]$
+    and its sum :
+    \[ x \mapsto \sum_{n = 0}^{+\infty} x^n = \frac{1}{1-x}\quad, \forall a \in \left[-1,1\right]\]
+
+\begin{center}
+--\includegraphics[width=0.8\textwidth]{covnergence_domain_ex01.jpg}
+\end{center}
+  \end{example}
+  
+  \begin{definition}[Uniform convergence and absolute convergence]
+
+   1) We say that $\sum_{n \in \N} f_n$ is absolutly convergent on $D$ if $\sum_{n \in \N}|f_n|$  
+    is pointwise convergent
+
+    2) We say that $\sum f_n$ is uniformly convergent if, $(R_n) \xrightarrow[D]{C.U} 0 $ (C.U $\to$
+    uniformly converges
+  \end{definition}
+
+  \textbf{Remark:} 
+  $\sum f_n$ C.U on $D \implies (f_n)\xrightarrow[D]{C.U} 0$ for example $\sum_{n \in \N} x^n$ 
+  does not uniformly CV on $\left[-1,1\right]$  
+
+  \textbf{Remark:} If there exists a real sequence $(x_n) \subset D$ such that the numerical serie
+  $\sum_{n \in \N}f_n(x_n)$ diverge then $\sum f_n$ does not uniformly CV on $D$ 
+for example $\sum_{n \in \N}ne^{-nx}$ is point-wise Cv on $\left] 0, +\infty\right]$
+but not uniformly convergent because $x_n = \dfrac{1}{n}$ 
+\[f_n(x_n) = ne^{-n\frac{1}{n}} = \frac{n}{e} \xrightarrow[n \to +\infty]{}  0
+\implies \sum f_n(\frac{1}{n}) \text{ div}  \]
+\[ \implies \sum f_n \text{ does not uniformly Cv on $ \left[ 0, +\infty\right]$}\]
+
+\begin{theorem}[Abel's criterion for uniform convergence]
+  
+  Let $f_n = a_n b_n\quad,\forall n \in \N$; $(a_n)(b_n) $ sequences of functions such that :
+
+  1) $\forall x \in D,\quad (b_n(x))_{n\in \N}$ is positive, decreasing  and $(b_n) \xrightarrow[D]{C.U}$ 0
+
+  
+  2)
+  \[
+    \exists M \geq 0, \forall x \in D; |\sum_{k=0}^n a_k(x)|\leq M;\quad \forall n \in \N
+  \]
+  then $\sum f_n$ Converges uniformly  on D
+\end{theorem}
+
+\begin{example}
+..
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Abel_ex01.jpg}
+\end{center}
+
+\end{example}
+
+\begin{definition}[Normal Convergence]
+
+  the series $\sum F_n$ is said to be normally convergent over $D$ if the positive numerical serie
+  $\sum_{n \in \N} sup_{x \in D}|f_n(x)| $ Converge 
+\end{definition}
+
+\textbf{Remark:}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{convergence_types_Remark.jpg}
+\end{center}
+
+\begin{theorem}
+  Let $\sum f_n$ be a series of functions on $D$ if there exists a real positive sequence 
+  $(V_n)_{n \in \N}$, such that: 
+
+  1) $\sum  f_n  \text{N.C on D (normally convergent) }$ 
+  2) $\forall x \in D, \forall n \in \N;\quad |f_n(x)| \leq V_n$
+
+  then $\sum f_n$ N.C on D
+
+  \begin{example}
+    \[
+      \sum \frac{cos(nx)}{n^\alpha} \text{ and } \sum \frac{sin(nx)}{n^\alpha} \text{ are  N.C} \Leftrightarrow 
+      \alpha > 1
+    \]
+
+    Because $\forall x \in \R; \forall n \in \N$;\quad $|\dfrac{cos(nx)}{n^\alpha}| \leq \dfrac{1}{n^\alpha}$ and
+    $| \dfrac{sin(nx)}{n^\alpha}| \leq \dfrac{1}{n^\alpha}$
+  \end{example}
+
+  \section{Properties of uniformly convergent series theorem(continuty):}
+
+  Let $\sum f_n$ be a series of contiuous functions that convergent uniformly on $D$, its sum is also 
+  continuous on $D$  . then :
+ \[
+   \forall a \in D; \sum_{n = 0}^{+ \infty} f_n(a) = \sum_{n = 0}^{+\infty}\left(\lim\limits_{x \to a} f_n(x)\right) 
+   = \lim\limits_{x \to a}\left(\sum_{n = 0}^{+ \infty} f_n(x) \right)
+ \]
+\end{theorem}
+
+\begin{example}
+  the function $f: x \mapsto \sum_{n =1}^{+\infty} \dfrac{1}{n^2 + x^2}$
+
+  is continuous on $\R$
+\end{example}
+
+\begin{theorem}[Integrability]   
+
+  Let $\sum_{n \in \N}f_n$ be uniformly convegent on $\left[a , b \right]$,where $f_n$ is
+  Riemann-integrable on $\left[a , b \right]$, then the sum is Riemann-integrable on $\left[a , b \right]$ and 
+  \[
+    \int_a^b \left( \sum_{n = 0}^{+\infty} f_n(x)\right)dx = \sum_{n = 0}^{+\infty}\left( \int_a^b f_n(x) dx\right)
+  \]
+\end{theorem}
+
+\begin{example}
+..
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Uni_Cv_properties_ex.jpg}
+\end{center}
+\end{example}
+
+\begin{theorem}[derivability]
+
+  Let $\sum f_n$ defined  on an interval $I \subset R$
+  such that :
+  1) $f_n$ is of class $C^1$ on I; $\forall n \in \N$
+
+  2) $\sum_{n\in \N} f'_n $ U.C on I with sum G 
+
+  3) $\exists x_0 \in I |$ the numerical series $\sum_{n \in \N} f_n(x_0)$ convergence, then 
+  $\sum f_n$ is pointwise convergent on I, with sum F where  F is defined by F' =  G 
+  and $F(x_0) = \sum_{n = 0 }^{+\infty} f_n(x_0)$
+\end{theorem}
+
+ \textbf{Remark:}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Remark_Derivability.jpg}
+\end{center}
+
+\end{document}

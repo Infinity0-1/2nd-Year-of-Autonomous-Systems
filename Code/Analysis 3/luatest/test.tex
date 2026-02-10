@@ -1,0 +1,30 @@
+
+\documentclass[12pt]{article}
+
+% ===== Packages =====
+\usepackage[utf8]{inputenc}   % handles accented characters
+\usepackage[T1]{fontenc}      % better font encoding
+\usepackage{amsmath, amssymb} % math symbols
+\usepackage{physics}           % physics shorthand like \dv, \pdv
+\usepackage{tikz}              % diagrams
+\usepackage{geometry}          % page margins
+\usepackage{hyperref}          % clickable links
+\geometry{a4paper, margin=1in}
+
+% ===== Custom Commands =====
+\newcommand{\vect}[1]{\mathbf{#1}} % vector notation
+\newcommand{\R}{\mathbb{R}}        % real numbers
+\newcommand{\N}{\mathbb{N}}        % natural numbers
+
+% ===== Document =====
+\begin{document}
+
+\section*{Sample Math}
+
+Here’s a vector: $\vect{v} \in \R^3$.  
+
+\[
+\nabla \cdot \vect{F} = \pdv{F_x}{x} + \pdv{F_y}{y} + \pdv{F_z}{z}
+\]
+
+\end{document}

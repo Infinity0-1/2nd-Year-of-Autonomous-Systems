@@ -1,0 +1,309 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{geometry}
+\usepackage{titlesec}
+\geometry{a4paper, margin=1in}
+
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{3d, arrows.meta}
+
+% Theorem environments
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+
+% Paragraph formatting
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{1em}
+
+% Add extra vertical space
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+\title{Chapter 01: Double integrals }
+\author{Notes from prof zeghlaoui course}
+
+\hbadness=10000
+\hfuzz=\maxdimen
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\F}{\mathbb{F}}
+
+% --- Derivatives ---
+\newcommand{\pd}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[3]{\dfrac{\partial^2 #1}{\partial #2\,\partial #3}}
+\newcommand{\pddx}[2]{\dfrac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\dd}[2]{\dfrac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\ddd}[2]{\dfrac{\mathrm{d}^2 #1}{\mathrm{d} #2^2}}
+\newcommand{\diff}{\,\mathrm{d}}
+
+%% vertical vector macro
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+
+\begin{document}
+
+\maketitle
+
+\vspace{2em}
+\section{Reminder:}
+Recall that if $f: \left[a,b\right] \to \R$ is bounded.
+
+for any subdivision $\sigma = \{ x_0=a <x_1< x_2<...< x_{n+1} = b\}$ of  $\left[a,b\right]$
+
+\[S(f,\sigma)= \sum_{i = 1}^{n}M_i(x_i - x_{i-1}) \quad and \quad s(f,\sigma))\]
+\[S(f,\sigma)= \sum_{i = 1}^{n}m_i(x_i - x_{i-1}) \quad \text{ where }  m_i = inf(f(x)) \quad x\in \left[a,b\right]\, \quad M_i sup(f(x)), x \in \left[x_{i-1}, x_i\right]\]
+
+
+called respectively, the upper and the lower Darbous sumf of $f$
+on $\left[a, b\right]$ with respect to the subdivision G;
+
+S: the area of the region plane delimited by:
+\[
+\begin{cases}
+  x=1 \quad y = 0 \\
+  x=b \quad y = f(x) \\
+\end{cases}
+\]
+
+(graph showing the lower and upper of an integral)
+
+\[s(f,\sigma) \le S \le S(f,\sigma)\quad if \sigma_1 \subset \sigma_2,\text{ then:}\]
+\[s(f,\sigma_1)  \le s(f,\sigma_2) \le S \le S(f,\sigma_2) \le S(f,\sigma_1)\]
+
+$$
+S^+ = inf (S(f,\sigma))\quad , \quad S^- = sup ((s(f,\sigma)))
+$$
+
+$$
+S^- \le S \le S^+
+$$
+
+\begin{definition}
+  We say that $f$ is Riemann integral on $\left[a,b\right]$ if :
+  \[S^+ = S^- = S = \int_a^b f(x)dx\]
+\end{definition}
+
+\begin{definition}
+  Riemann sums
+
+  Let G a subdivision of $\left[a,b\right]$ and $\zeta = \{\zeta_1,\dots,\zeta_n\} \quad / \zeta \in \left[x_i-1, x_i\right]$
+
+  \[s(f,\sigma) \le R(f,\sigma,\zeta) = \sum_{i=1}^{n}f(\zeta_i)(x_i-x_i-1) \le S(f,\sigma)\]
+
+  If $f: \left[a,b\right] \to \R$ is Riemann integral, then:
+
+  $\exists (\sigma_n)$ a sequence of subdivision of $\left[a,b\right]$
+
+$\exists (\zeta_n)$ associated with 
+$(\sigma_n)[a,b]\quad \zeta_n = (\zeta_n^i),\ \zeta_n^i \in [x_{i-1}^n, x_i^n]$
+
+  $\lim\limits_{n \to \infty}R(f, \sigma_n,\zeta_n) = \int_a^bf(x)dx$
+
+\underline{Inparticular:}
+\[\sigma_n = \{x_i^n= a + \frac{i}{n}(b-a): i\in {0,\dots,n}\}\]
+\[\lim\limits_{n \to \infty} \frac{b-a}{n} \sum_{i = 1}^{n} f(\zeta_i) = \int_a^b f(x)dx\]
+\[\lim\limits_{n \to \infty} \frac{b-a}{n} \sum_{i = 1}^{n}f(a+ \frac{i}{n}(b-a)) = \int_a^bf(x)dx \quad, x_i^n-x^n_{i-1} = \frac{b-a}{n}\]
+\end{definition}
+
+\section{Double integrals:}
+\subsection{Definition and first properties:}
+
+\begin{definition}
+  Darboux sums- $\quad $ Riemann sums:
+
+  Let $f: \Delta := \left[a,b\right]\times\left[c,d\right] \to \R $  be a bounded funtion
+
+  1) A subdivision $\sigma$ of $\Delta$ is a set $\sigma = \{\Delta_y = \left[x_{i-1}, x_i\right]\times\left[y_{i-1}, y_i\right] \}$
+
+  with  $(x_i)_{i = 1,\dots,n}$ is a subdivision of $\left[a,b\right]$ and $(y_j)_{j = 0,\dots,m}$ a subdivision of 
+  $\left[c,d\right]$ we note : $A(\Delta_{ij}) = (x_i - x_{i-1})(y_j -y_{j-1})$
+
+  and $\delta(\sigma) = Max_{i,j} A(\Delta_{y bar})$
+
+  2) 
+  \[\forall i,j \quad/ M_y = sup_{(x,y)\in(\Delta_y)}f(x,y) \quad and \quad m_i = inf_{(x,y)\in(\Delta_y)}f(x,y)\]
+
+  the upper Darbous sum of $f$ with respect $G$ is :
+  \[S(f,\sigma) = \sum_{i=1}^n\sum_{j=1}^m M_{ij}A(\Delta_y)\]
+
+  the lower Darbous sum of $f$ with respect $G$ is :
+  \[S(f,\sigma) = \sum_{i=1}^n\sum_{j=1}^m m_{ij}A(\Delta_y)\]
+
+  3) if we give $\zeta = \{(\zeta_i^1,\zeta_j^2) \ mid \zeta_i^1 \in \left[x_{i-1},x_i\right] \text{and }\zeta_i^1 \in \left[y_{i-1},y_i\right]\}$
+
+  The Riemann sum with respet to $G$ and $\zeta$ is :
+  \[R(f,\sigma,\zeta)= \sum_{i=1}^n\sum_{j=1}^m f(\zeta_i^1,\zeta_j^2)A(\Delta_y)\]
+  \[R(f,\sigma,\zeta)= \sum_{i=1}^n\sum_{j=1}^m f(\zeta_i^1,\zeta_j^2)(x_i - x_{i-1})(y_i - y_{i-1})\]
+
+\end{definition}
+
+\subsection{example:}
+
+\[ f: (x,y) = \alpha \quad; \forall(x,y) \in \Delta\]
+\[M_{ij} = m_{ij} = f(\zeta_i^1, \zeta_j^2) = \alpha\]
+\[S(f,\sigma) = s(f, \sigma) = R(f,\sigma, \zeta) = \alpha(b-a)(c-d) = \alpha A(\Delta)\]
+
+\begin{definition}
+  Riemann integrability:
+
+
+  with the same  notations above , we put:
+  \[S^+(f)= inf(S(f,\sigma)) \text{ and } S^-= sup (s(f,\sigma))\]
+
+We say that $f$ is : Riemann integrable on $\Delta$ if $S^+(f) = S^-(f)$
+\[\Leftrightarrow \forall_{\epsilon > 0}; \exists (\sigma^2) / \quad  S(f, \sigma^2) - s(f, \sigma^2) < \epsilon =\int\int_{\Delta}f(x,y)dxdy \]
+\[\Leftrightarrow \exists(\sigma_n) \text{of subdivsion of } \Delta / \lim S (f, \sigma_n) = \lim s(l, \sigma_n)\]
+
+\underline{corollay:} if  $f : \Delta\left[a,b\right]\times\left[c,d\right]$ then :
+
+\[\lim\limits_{n \to +\infty} \frac{(b-a )(d-c)}{n^2}\sum_{i=1}^n\sum_{j =1}^n f(a + \frac{i}{n}(b-a),c + \frac{d}{n}(d-c))\]
+\[ = \int\int_{\Delta}f(x,y)dxdy\]
+
+\end{definition}
+
+\subsection{Example:}
+\[f(x,y) = x^2 + y^2 \quad,\Delta = \left[0,1\right]^2= \left[0,1\right]\times\left[1,0\right]\]
+
+
+\begin{definition}
+  Riemann integrability on a bounded domaine:
+
+  Let $d$ be a bounded subsed on $\R^2$ and $ f: D \to \R $ a bounded function
+
+  we say that $f$ is  Riemann integrable on $D$ if for any rectangle $D \subset \Delta$, the function :
+  \[
+    f^{tilde}(x,y) = 
+    \begin{cases}
+      f(x,y) \quad if (x,y) \in D \\
+      0 \quad if (x,y) \in \Delta -D
+    \end{cases}
+  \]
+
+  is  Riemann integrable, in this case :
+  \[ \int\int f(x,y)dxdy := \in\int f^{tilde}(x,y) dxdy\]
+
+\textbf{Remark:}
+Any continuous function is Riemann integrable
+
+\subsection{properties:}
+
+1)\underline{Linearity:}
+if $f,g: D \to \R$ are Riemann integrables then:
+$\forall \alpha,\beta \in \R \quad, \alpha f + \beta y$ is Riemann inegrable and 
+\[\int\int_D(\alpha f + \beta y)(x,y)dxdy = \alpha\int\int_Df(x,y)(x,y)dxdy + \beta\int\int_Dg(x,y)(x,y)dxdy \]
+2)
+
+If $f \ge 0 on D \implies \int\int_D f(x,y) dxdy \ge $
+with is the volume of $\omega = \{(x,y,z) \in \R^3 : (x,y)\in D and 0 \le z \le f(x,y)\}$
+
+So ; if $f \ge g \implies \int\int_D\left[f(x,y) - g(x,y)\right]dxdy$
+
+$= vol\{(x,y,z) \in \R^3: (x,y) \in D \text{ and } g(x,y) \le z \le f(x,y)\}$ 
+
+3)\underline{Chasles's relation:}
+
+If $D = D_1 \cup D_2$ such that $D_1 \cap D_2$ is at most a curve then :
+\[\int\int_Df(x,y)dxdy = \iint_{D_1}f(x,y)dxdy + \iint_{D_2}f(x,y)dxdy \]
+\end{definition}
+
+\begin{definition}
+  $Vol(D) = A(D) = \int\int_Ddxdy$ \quad and the average of $f$ on D is :
+  $\dfrac{1}{Vol(D)}\int\int_Df(x,y)dxdy = \dfrac{\int\int_Df(x,y)dxdy }{\int\int dxdy }$
+\end{definition}
+
+\textbf{\underline{Remark:}}
+
+If  $f \equiv C \quad$, the average of $f$ is $C$
+
+\subsection{Example:}
+
+$D$: the triangle with vertices $(0,0),(1,0),(0,1)$
+(graph) 
+and $f(x,y) = xy $
+\[
+  \tilde{f}(x,y) = 
+  \begin{cases}
+    xy  \quad if \quad x+y \le 1 \\
+    0 \quad if \quad x+y > 1
+  \end{cases}
+\]
+$\forall_{x,y} \in \left[0,1\right] \left[0,1\right]$
+
+\[\int\int_D xy dxdy = \lim\limits_{n \to +\infty} \frac{(1-0)(1-0)}{n^2} \sum_{i=1}^n\sum_{j= 1}^n\tilde{f}(\frac{i}{n},\frac{d}{n})\]
+
+\[\lim\limits_{n \to +\infty}\sum_{i =1}^n \left[\sum_{j =1}^n \frac{i}{n}\times\frac{d}{n}\right]\]
+\[U_n = \frac{1}{n^2}\left[\sum_{i=1}^n\sum_{j =1}^n \frac{i}{n}\times\frac{d}{n}\right]\]
+\[U_n = \frac{1}{n^4} \sum_{i = 1}^n i\left[\sum_{j=1}^{n-i}j\right] = =\frac{1}{n^4}\sum_{i =1}^n i\left(\frac{(n-i)(n-i+1)}{2}\right) \]
+\[U_n =  \frac{1}{2n^4} \sum_{i=1}^n i (n^2 + i^2 - 2in + n-i) \]
+\[U_n =  \frac{1}{2n^4} \sum_{i = 1}^n \left[i(n^2+n) - i^2(2n+1) +i^3\right]\]
+\[U_n = \frac{1}{2n^4} \left[(n^2 + n)\frac{(n+1)n}{2} -(2n + 2)\frac{n(n+1)(2n +1)}{6} + \frac{(n^2)(n+1)^2}{4}\right] \]
+\[U_n  = \frac{1}{4}(1 + \frac{1}{n})^2 - \frac{1}{12}(1 + \frac{1}{n})(2 + \frac{1}{n})^2 + \frac{1}{8}(1 + \frac{1}{n})^2\]
+
+\[\iint_D xy dxdy = \lim\limits_{n \to + \infty} U_n = \frac{1}{4} - \frac{1}{12}*4  + \frac{1}{8} = \frac{1}{24}\]
+
+\begin{theorem}
+  Fubini's theorem;;
+
+  Let $f: D \to \R$ Riemann integrable
+
+  1) if 
+  \[D  = \{(x,y) \in \R^2 : \quad a \le x\le b  \text{ and } \exists g_1,g_2: \left[a,b\right] \to \R \text{ continuous}
+    \mid 
+    \begin{cases}
+      g_1(x) \le y \le g_2(x) \\
+      \forall x \in \left[a,b\right]
+  \end{cases}\}
+  \]
+
+  then : $\iint_D f(x,y)dxdy = \int_a^b \left[\int_{g_1(x)}^{g_2(x)}f(x,y)dy\right]dx$
+
+  2) If
+  \[
+    D = \{ (x,y) \in \R^2 : \quad c \le y \le d \text{ and } \exists h_1,h_2: \left[c,d\right] \to \R \text{ continuous}
+      \begin{cases}
+      h_1(y) \le \le h_2(y) \\ 
+    \forall y \in \left[c,d\right]
+  \end{cases} \}
+  \]
+
+  then : $\iint_D f(x,y)dxdy = \int_a^b \left[\int_{h_1(x)}^{h_2(x)}f(x,y)dx\right]dy$
+\end{theorem}
+\subsection{Remark:}
+We can use the Chasles's formula to apply this theorem
+
+\subsection{Example 01:}
+\[ D= \{(x,y) \in \R^2 \mid x^2 + y^2 \le R^2\}\]
+\[D_1 = \{x,y\} \in D : \quad y \ge 0 ; D_2 = \{(x,y) \in D: \quad y \le 0\}\]
+\[D_1 = \{ (x,y) \in \R^2 : -R \le x \le R \text{ and } \quad 0 \le y \le \sqrt{R^2 - x^2}\}\]
+\[D_2 = \{ (x,y) \in \R^2 : -R \le x \le R \text{ and } \quad  -\sqrt{R^2 - x^2} \le y \le 0 \}\]
+...
+
+
+\subsection{Example 02:}
+(trpezoid area proof )
+
+\subsection{Example 03:}
+\[f(x,y) = xy \]
+\[D = \{(x,y) \in \R^2 : \quad  x\ge0,y\ge0, x+y \le 1\}\]
+\[D = \{(x,y) \in \R^2 : \quad  0 \le x \le 1 \text{ and } 0 \le y \le 1 \}\]
+
+
+\subsection{Example 04:}
+Let us compute volume of $\Omega$ bounded above by the parboloid $z = 1 - x^2 -y^2$ and beloo by the plane $z = 1-y$
+
+\[S^+(f) = \inf_{\sigma} S(f,\sigma)\quad , \quad S^-(f) = \sup_{\sigma} s(f,\sigma)\]
+
+\end{document}

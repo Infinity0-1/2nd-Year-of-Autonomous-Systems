@@ -1,0 +1,81 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+% Optional for colored boxes
+\usepackage{tcolorbox}
+
+% Theorem environments
+\newtheorem*{defn}{Definition}
+
+% Paragraph formatting
+\setlength{\parindent}{1.5em} % first line indent
+\setlength{\parskip}{0.5em}   % space between paragraphs
+
+\title{Chapter 01: Functions of Several Variables}
+\author{Author: Who's Who (Them)}
+\date{October 2025}
+
+\begin{document}
+
+\maketitle
+
+\section*{Functions of Several Variables}
+
+Let $E, F$ be two sets.  
+The product
+\[
+E \times F = \{ (x,y) \mid x \in E \text{ and } y \in F \}.
+\]
+
+\begin{defn}
+A relation $R$ from $E$ to $F$ is a given subset $G$ (or $G_R$) of $E \times F$.  
+
+We say that $y$ is the \textbf{image} of $x$ ($x$ is the \textbf{pre-image} of $y$) if $(x,y) \in G$.
+\end{defn}
+
+\section*{Inverse Relation}
+
+The inverse relation $R^{-1}$ of $R$ is from $F$ to $E$ defined by
+\[
+y R^{-1} x \Leftrightarrow x R y
+\]
+
+\[
+G_{R^{-1}} = s(G_R), \quad \text{where } s =
+\begin{cases}
+E \times F \to F \times E,\\
+(x,y) \mapsto (y,x)
+\end{cases}
+\]
+
+\begin{defn}
+A function $f : E \to F$ is a relation from $E$ to $F$ such that each $x \in E$ has at most one image $y \in F$.  
+
+The \textbf{domain} of $f$ is
+\[
+Dom(f) = \{ x \in E \mid \text{the image of $x$ exists} \}.
+\]
+
+If $x \in Dom(f)$, we denote $f(x)$ its image.  
+When $Dom(f) = E$, $f$ is called a \textbf{map} from $E$ to $F$.
+
+We define
+\[
+G_F = \{ (x,y) \in E \times F \mid x \in Dom(f),\ y = f(x) \}
+\]
+
+\[
+\text{If } F = \mathbb{R}, \quad f : E \to \mathbb{R} \text{ is a real function}
+\]
+
+\[
+\text{If } F = \mathbb{C}, \quad f : E \to \mathbb{C} \text{ is a complex function}
+\]
+\end{defn}
+
+\end{document}

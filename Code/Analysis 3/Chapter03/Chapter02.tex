@@ -1,0 +1,624 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{geometry}
+\usepackage{titlesec}
+\geometry{a4paper, margin=1in}
+
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{3d, arrows.meta}
+
+% Theorem environments
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+
+% Paragraph formatting
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{1em}
+
+% Add extra vertical space
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+\title{Chapter 02: Vector Analysis }
+\author{Notes from prof zeglaoui course}
+
+\hbadness=10000
+\hfuzz=\maxdimen
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\F}{\mathbb{F}}
+
+% --- Derivatives ---
+\newcommand{\pd}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[3]{\dfrac{\partial^2 #1}{\partial #2\,\partial #3}}
+\newcommand{\pddx}[2]{\dfrac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\dd}[2]{\dfrac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\ddd}[2]{\dfrac{\mathrm{d}^2 #1}{\mathrm{d} #2^2}}
+\newcommand{\diff}{\,\mathrm{d}}
+
+%% vertical vector macro
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+
+\begin{document}
+
+\maketitle
+
+\vspace{2em}
+\section{vector fields and scalar fields}
+\begin{definition}
+  1) We call a scalar field defined on a region $D$  $\subset\R^2$ (respectively on $\Omega \subset \R^3$), a real function defined on $D$ (respectively $\Omega$)
+
+2) a vector field F over $D \subset \R^2$ (resp $\Omega )$ is a function F that assigns to any $(x,y) \in D$ a vector 
+$F(x,y) = M(x,y)\vec{i} + N(x,y)\vec{j} \quad \text{ where } M,N \in \mathcal F(D, \R)$
+
+3) a vector field F over $\Omega \subset \R^3$ is a function F that assignes to any $(x,y,z) \in \Omega$ a vector 
+$F (x,y,z) = P(x,y,z)\vec{i} + Q(x,y,z)\vec{j} + R(x,y,z)\vec{k}$
+\end{definition}
+
+
+\begin{example}
+  1) the position vector field 
+\begin{center}
+\includegraphics[width=0.8\textwidth]{2.1example01.jpg}
+\end{center}
+\end{example}
+
+\begin{definition}
+  A vector field $F$ is conservative if there exists a
+
+  potential function $f ,\quad F = grad(f)$ 
+\end{definition} 
+
+
+\begin{example}
+...
+\begin{center}
+\includegraphics[width=0.8\textwidth]{2.1.example02.jpg}
+\end{center}
+
+\end{example}
+
+\begin{theorem}
+  A vector field $F= M\vec{i} + N\vec{j}$ over a convex region $D \subset \R^2$ is conservative if and only if 
+  \[ \pd{M}{y} = \pd{N}{x} \]
+\end{theorem}
+
+\begin{proof}
+  if $F$ is conservative
+  \[ F = \pd{f}{x}\vec{i} + \pd{f}{y}\vec{j} \quad \text{ where $f$ is of class  $C^2$}\]
+ $$ 
+    \pd{M}{y} - \pd{N}{x} = \pd{}{y}\left(\pd{f}{x}\right) -\pd{}{x}\left(\pd{f}{y}\right) =
+    \pdd{f}{y}{x} - \pdd{f}{x}{y} = 0
+ $$ 
+  Shwarz' theorem
+
+  $\Leftrightarrow $
+  \[
+ f(x,y) = \int_0^1 \left[(x-x_0)M(x_0+t(x-x_0),y_0 +t(y-y_0))+ (y-y_0)N(x_0+t(x-x_0),y_0 +t(y-y_0)) \right]dt
+  \]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{2.1.proof.jpg}
+\end{center}
+\end{proof}
+
+\begin{example}
+  .
+\begin{center}
+\includegraphics[width=0.8\textwidth]{2.1.example03.jpg}
+\end{center}
+\end{example}
+
+\begin{definition}
+  Let  $ F:(x,y,z) \to P(x,y,z)\vec{i}+Q(x,y,z) \vec{j}+ R(x,y,z)\vec{z}$
+   be a vector field over $\Omega \subset \R^3$. Such that the first partial deriatives of $F$ exists
+
+   the curl of $F$, denoted by $Curl(F)$ (Or $\nabla\times F$)
+   is the vector fiels over $\Omega $ defind by :
+   \[
+     \begin{aligned}
+     Curl(F) =  \vect{
+       \vec{i} &\quad \vec{j} &\quad \vec{k} \\
+       \pd{}{x} &\quad \pd{}{y} &\quad \pd{}{z} \\
+       P &\quad Q &\quad R
+     }
+   \end{aligned} = (\pd{R}{y}-\pd{Q}{z})\vec{i} +(\pd{P}{z}- \pd{R}{x})\vec{j} + (\pd{Q}{x}-\pd{P}{y})\vec{k}
+   \]
+   We say that $F$ is irrotationnal vector field if  $Curl(F) = 0$
+\end{definition}
+\begin{example}
+.
+\begin{center}
+\includegraphics[width=0.8\textwidth]{2.1.example04.jpg}
+\end{center}
+\end{example}
+\begin{theorem}
+  Let $F = P\vec{i} + Q\vec{j} + R\vec{k}$ be vector field over a convex domain $\Omega \subset \R^3$ of class $C^1$
+  then $F$ is conservative $\Leftrightarrow Curl(F) = 0$ 
+\end{theorem}
+
+\textbf{proof}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{2.1.proof2.1.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{2.1.proof2.2.jpg}
+\end{center}
+
+\begin{example}
+.
+\begin{center}
+\includegraphics[width=0.8\textwidth]{2.1.example05.jpg}
+\end{center}
+\end{example}
+
+\begin{definition}
+  Divergence of vector field-Laplacian of scalar field
+
+  1)$div(F)$= $\nabla.F$  $\to$
+  $
+    \begin{cases}
+      F = M\vec{i} + N\vec{j} \implies div(F) = \pd{M}{x} + \pd{N}{y} \\
+      F = P\vec{i} + Q\vec{j} + R\vec{k}\implies div(F) = \pd{P}{x} + \pd{Q}{y} + \pd{R}{z} \\
+    \end{cases}
+  $
+
+  2) If $F = grad(f) \implies div(F) = div(grad(f)) = \Delta(f) \quad \text{ the Laplacian of f}$
+
+  3) F is called divergence free if $div(F) = 0$
+
+  if is called harmonic function if $\Delta(f) = 0  \to$ 
+  $
+  \begin{cases}
+    \pddx{f}{x} + \pddx{f}{y}  =0  \\
+    \pddx{f}{x} + \pddx{f}{y} + \pddx{f}{z} = 0  
+  \end{cases}
+  $
+\end{definition}
+
+\textbf{Remark:} If $F$ is of class $C^2$ vector field, then $div(curl(F)) = 0$, using Schwarz's theorem
+
+\section{Line integrals}
+\subsection{Line integral of scalar field}
+
+Let $f : D \to \R$ a continuous function over $D \subset \R^2(resp: D\subset \R^3)$, let 
+\[\Gamma :
+\begin{cases}
+  \left[a,b\right] \to D \\
+    t \mapsto \gamma(t)
+    \end{cases}
+  \]
+of $C^1$ curve on $D$
+
+the line integral of $f$ over $\Gamma$ denoted by
+$\quad \int_\Gamma f dl$ is a real number
+
+\[\int_\Gamma fdl = \int_a^b f(\gamma(t)) ||\gamma'(t)|| dt \quad \text{ where} ||\gamma'(t)||= \sqrt{(x'(t))^2 +(y'(t))^2+(z'(t))^2}\]
+
+in particular if $f \equiv 1$ ;
+
+$\int_\Gamma dl = l(\Gamma) \quad \text{length of $\Gamma$}$
+$= \int_a^b ||\gamma'(t)||dt$
+
+$\int_\Gamma f dl$ is independant to parametrization $(\left[a,b\right], \gamma) \text{ of }\Gamma$
+
+2) If $\Gamma$ is piece-wise $C^1$ ; i.e $\exists k \geq 2$
+\[ \forall i\in\{1,\dots,k\} ; \Gamma_i \text{ is }C^1\quad; \Gamma_i \cap \Gamma_{i+1} = \{pt\} \quad \text{ and } \Gamma_i \cap \Gamma_j = \phi \quad if \quad |i-j| \geq 2 \]
+then:
+\[\int_\Gamma fdl = \sum_{i=1}^k \int_{\Gamma_i}fdl\]
+
+\begin{example}
+  .
+\begin{center}
+\includegraphics[width=0.8\textwidth]{2.1.example06.jpg}
+\end{center}
+\end{example}
+
+\subsection{Line integral of a vector field}
+
+Let $\Gamma$ a curve parametrized by $\left[a,b\right] \xrightarrow{\gamma} \gamma(t)$ and F a continuous vector field
+
+the line integral of F over $\Gamma$ ( or the circulation of F to $\Gamma$) is :
+\[\int_\Gamma F.dr = \int_a^b \left[F(\gamma(t))\cdot\gamma'(t)\right]dt\]
+
+which is independant of the choice of parametrization
+
+in $\R^2$ if $\gamma(t) = (x (t),y(t)) $ and $F = M\vec{i} + N\vec{j}$
+
+\[\int_\Gamma F.dr = \int_a^b \left[x'(t)M(x(t),y(t)) + y'(t) N (x(t),y(t))\right]dt\]
+
+In $\R^3$ if $\gamma(t) = (x(t),y(t),z(t))$ and $F = P\vec{i} + Q\vec{j} + R\vec{k}$ 
+
+then:
+\[\int_\Gamma F.dr = \int_a^b \left[x'(t)P(x(t),y(t),z(t)) + y'(t)Q(x(t),y(t),z(t))+ z'(t)R(x(t),y(t),z(t))\right] dt\]
+
+\underline{\textbf{Remark:}}
+
+We denoted by $\int_\Gamma Mdx + N dy = \int_\Gamma F.dr$  int $\R^2$ and  by
+
+$\int_\Gamma Pdx + Qdy + Rdz = \int_\Gamma F.dr $ in $\R^3$
+
+this is the differential representation of the integral of F along to $\Gamma$
+
+
+\underline{\textbf{Remark:}}
+If $F = grad(f)$ is conservative vector field then:
+\[
+\begin{aligned}
+\begin{cases}
+  df = \pd{f}{x}dx + \pd{f}{y}dy = F.dr \quad \mid dr = dx\vec{i} + dy\vec{j} \\
+  df = \pd{f}{x}dx + \pd{f}{y}dy + \pd{f}{z} = F.dr \quad \mid dr = dx\vec{i} + dy\vec{j} + dz\vec{k} \\
+\end{cases}
+\end{aligned}
+\]
+
+\begin{example}
+ .. 
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Line_int_ex02.jpg}
+\end{center}
+\end{example}
+
+
+\begin{example}
+ .. 
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Line_int_ex03.jpg}
+\end{center}
+\end{example}
+
+\begin{theorem}
+  Let $F = grad(f)$ be a conservative vector field over $D : \Gamma \subset D$, parametrized by ($\left[a,b\right]$,$\gamma$), then:
+  \[
+    \int_\Gamma F.dr = f(\gamma(b)) - f(\gamma(a))
+  \]
+
+  in particular, if $\Gamma$ is a closed path  ($\gamma(a) = \gamma(b)$) then : $\oint F.dr = 0$
+
+  \textbf{Proof}
+  \[
+    F = grad(f) = \pd{f}{x}\vec{i} + \pd{f}{y}\vec{j}; 
+    \begin{cases}
+      \gamma(t) = x(t)\vec{i} + y(t)\vec{j} \\
+      \gamma'(t) = x'(t)\vec{i} + y'(t)\vec{j} \\
+    \end{cases}
+  \]
+
+  \[
+    F(\gamma(t)).\gamma'(t) = x'(t)\pd{f}{x}(x(t),y(t)) + y'(t) \pd{f}{y}(x(t),y(t)) =(f \circ \gamma)'t \quad \mid (f \circ \gamma)(t) = f(x(t),y(t))
+  \]
+  \[
+    \int_\Gamma F.dr = \int_\Gamma grad(f).dr = \int_a^b (f\circ\gamma)'(t) dt =\left[f(\gamma(t))\right]_a^b
+  \]
+  \[
+    = f(\gamma(b)) -f(\gamma(a))
+  \]
+\end{theorem}
+
+\begin{theorem}
+  (Green's theorem)
+  
+  Let D be a simply connected and connected region  of $\R^2$ with piece-wise $C^1 $ boundary simple curve 
+  $\Gamma = \partial D$
+
+  and $F = M\vec{i}  + N\vec{j}$ be a $C^1$vector field over $D$, Then :
+  \[\oint_\Gamma F.dr = \oint_\Gamma Mdx + Ndy = \iint_D (\pd{N}{x}- \pd{M}{y})(x,y)dxdy\]
+\end{theorem}
+
+\begin{example}
+  ..
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Line_int_ex04.jpg}
+\end{center}
+\end{example}
+
+\begin{theorem}
+  \underline{Corollary}
+  \underline{Line Integral area}
+
+  if $D$ is a plane region bounded by a piece-wise simple closed curve $\Gamma = \partial D$ oriented counterclockwise, then $A(D)= \frac{1}{2} \oint_{\Omega = \partial D} (xdy -ydx)$
+
+  \textbf{Proof}
+
+  \[ M(x,y) = -\frac{1}{2}y; \quad N(x,y) = \frac{1}{2}x\]
+
+  by Green's theorem;
+  \[\oint_{\partial D} Mdx + Ndy = \iint_D (\pd{N}{x}- \pd{M}{y})(x,y)dxdy\]
+
+\end{theorem}
+
+\begin{example}
+.
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Line_int_ex01.jpg}
+\end{center}
+\end{example}
+
+\section{Surface integral}
+\subsection{Parametric surface}
+
+\begin{definition}
+  Let x,y,z be a three functions of u and v, that are continuous on $D \subset \R^2$. The set $S$ of  points (x,y,z) given by :  $r(u,v) = x(u,v)\vec{i}+y(u,v)\vec{j}+z(u,v)\vec{k}$
+  be a parametrized surface. The following equations:
+  \[S:
+    \begin{cases}
+      x= x(u,v) \\
+      y= y(u,v)\quad, \text{are called the parametric equation of S} \\
+      z= z(u,v) 
+    \end{cases}
+  \]
+\end{definition}
+\begin{example}
+..
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Parametric_Surface_ex01.jpg}
+\end{center}
+
+..
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Parametric_Surface_ex02.jpg}
+\end{center}
+\end{example}
+
+\begin{definition}
+  Let $(D,r)$ be a parametrization of the surface S.
+
+  We say that S is smooth (or $C^1$) if x,y,z are $C^1$ or the vector field $V$  is $C^1$ on D
+
+  we say that S is piece-wise smooth. if 
+  $\exists k \in \N^{*}; S =S_1 \cup S_2\cup ... \cup S_k \mid S_i \cup S_j$ is at most a curve and $S_i$ is smooth
+
+  Let S be smooth surface. The tangent plane of S at a point $(x_0,y_0,z_0) \in S$ is the affine space
+  \[T_{(x_0,y_0,z_0)}S : 
+  {
+  \begin{cases}
+    x = x_0 + (u-u_0) \pd{x}{u}(u_0,v_0)+ (v-v_0) \pd{x}{v}(u_0,v_0)\\
+    y = y_0 + (u-u_0) \pd{y}{u}(u_0,v_0)+ (v-v_0) \pd{y}{v}(u_0,v_0) \\
+    z = x_0 + (u-u_0) \pd{z}{u}(u_0,v_0)+ (v-v_0) \pd{z}{v}(u_0,v_0)
+  \end{cases}
+  }\]
+  \[ :r:(u,v) \mapsto r(u_0,v_0) + (u -u_0)\pd{r}{u}(u_0,v_0) + (v-v_0)\pd{r}{v}(u_0,v_0)\]
+  \[ r(u_0,v_0) = x_0\vec{i} + y_0\vec{j} + z_0\vec{k}\quad;\quad \pd{r}{u}= r_u \quad ; \quad \pd{r}{v}= r_v\]
+
+  the normal vector field of S ; denoted by N is :
+
+  $N = r_u\times r_v = \pd{r}{u} \times \pd{r}{v}$
+
+  \[
+  \begin{aligned}
+  N = 
+\begin{vmatrix}
+  \vec{i}&\quad \vec{j}&\quad \vec{k} \\
+  \pd{x}{u}&\quad \pd{y}{u}&\quad \pd{z}{u} \\
+  \pd{x}{v}&\quad \pd{y}{v}&\quad \pd{z}{v} \\
+\end{vmatrix}
+  \end{aligned}
+  \]
+
+  So;\quad $T_{(x_0,y_0,z_0)}S \perp N(x_0,y_0,z_0),\quad ||N(x_0,y_0,z_0)|| = || \pd{r}{u}(u_0,v_0) \times \pd{r}{v}(u_0,v_0)||$
+\end{definition}
+
+\begin{example}
+..
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{piece_wise_smooth_surface_ex01.jpg}
+\end{center}
+\end{example}
+
+\begin{definition}
+  \underline{the area of a smooth surface}
+
+  Let $\quad S: r: (u,v) \mapsto r(u,v) $ over $D \subset R$ be a smooth parametrized surface the area of S b 
+  \[
+    \begin{aligned}
+      A(S) &= \iint_D ||r_u(u,v)\times r_v(u,v)|| = \iint_{\sigma} d\sigma  \\
+       &= ||N(u,v)||dudv
+    \end{aligned}
+  \]
+\end{definition}
+
+\begin{example}
+...  
+\begin{center}
+\includegraphics[width=0.8\textwidth]{area_wise_smooth_surface_ex01.jpg}
+\end{center}
+\end{example}
+
+\underline{\textbf{Remark:}}
+\[S = Gr_f = \{(x,y,z) \in \R^3 : (x,y) \subset D \text{ and } z = f(x,y)\}\]
+\[ S : r (u,v) = u\vec{i}+v\vec{j}+f(u,v)\vec{k}\]
+\[ d\sigma = \sqrt{1 +\left(\pd{f}{u}(u,v)\right)^2 + \left(\pd{f}{v}(u,v)\right)^2}\]
+
+\[A(S) = \iint_D \sqrt{1 +\left(\pd{f}{u}(u,v)\right)^2 + \left(\pd{f}{v}(u,v)\right)^2} dudv\]
+
+\subsection{Surface integral}
+
+\begin{definition}
+  Let  $S: r(u,v) \mapsto x(u,v)\vec{i} + y(u,v)\vec{j} + z(u,v) \vec{k}$ be a parametrized
+  smooth surface and $f: \R^3 \to \R$ a function continuous over S, denoted by 
+  $\int_S fd\sigma$ is the real number 
+
+
+  $\iint fd\sigma = \iint_D f(r(u,v))||r_u(u,v)\times r_v(u,v) ||dudv$
+
+  $\iint fd\sigma = \iint_D f(x(u,v)+ y(u,v)\ + z(u,v))||\pd{r}{u}(u,v)\times \pd{r}{v}(u,v) ||dudv$
+
+  \underline{\textbf{Remark:}}
+
+  1) If 
+\[
+  \begin{aligned}
+    S &= \{(x,y,z) \in \R^3 : z = \varphi(x,y)\} \to  \iint_S fd\sigma \\
+      &=\iint_D f(x,y,\varphi(x,y))\sqrt{1 +\left(\pd{\varphi}{x}(x,y)\right)^2 + \left(\pd{\varphi}{y}(x,y)\right)^2} dxdy
+  \end{aligned}
+\] 
+  2) If 
+\[
+  \begin{aligned}
+    S &= \{(x,y,z) \in \R^3 : y = \varphi(x,z)\} \to  \iint_S fd\sigma \\
+      &=\iint_D f(x,\varphi(x,y),z)\sqrt{1 +\left(\pd{\varphi}{x}(x,z)\right)^2 + \left(\pd{\varphi}{z}(x,z)\right)^2} dxdz
+  \end{aligned}
+\] 
+  3) If 
+\[
+  \begin{aligned}
+    S &= \{(x,y,z) \in \R^3 : x = \varphi(y,z)\} \to  \iint_S fd\sigma \\
+      &=\iint_D f(\varphi(y,z),y,z)\sqrt{1 +\left(\pd{\varphi}{y}(y,z)\right)^2 + \left(\pd{\varphi}{z}(y,z)\right)^2} dydz
+  \end{aligned}
+\] 
+\end{definition}
+
+4)
+\[S = \{(x,y,z) \in \R^3 : z =c , (x,y) \in D\}; A(S) = A(D) = \iint_D dxdy\]
+
+\begin{example}
+  1)...
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Surface_int_ex01.jpg}
+\end{center}
+
+2)..
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Surface_int_ex02.jpg}
+\end{center}
+\end{example}
+
+
+\subsection{Flux of vector field over surface}
+\begin{definition} 
+  \underline{\textbf{Unit norma vector fields - Oriened surfaces }}
+
+  Let S be a smooth parametrized surface 
+
+  S is regular if  $||r_u\times r_\theta||(u,v) \neq 0,\forall(u,v) \in D \mid D \text{ connected}$
+
+  So, S can be oriented by $N(x,y,z) = \dfrac{1}{||r_u\times r_v||(u,v)}((r_u \times r_v)(u,v)) \begin{cases}
+  x = x(u,v) \\y = y(u,v)\\z = z(u,v)\end{cases}$
+
+  or, S can be also oriented by $(-N)(x,y,z) = \dfrac{1}{||r_v\times r_u||(v,u)}((r_u \times r_v)(u,v)) \begin{cases}
+  x = x(u,v) \\y = y(u,v)\\z = z(u,v)\end{cases}$
+\end{definition}
+\begin{example}
+  1)
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Unit_normal_vect_ex01.jpg}
+\end{center}
+
+2)
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Unit_normal_vect_ex02.jpg}
+\end{center}
+\end{example}
+
+\begin{definition}
+  \underline{\textbf{Flux of vector field over regular parametrized }}
+
+  Let $F = P\vec{i}+Q\vec{j}+R\vec{k}$ be a continuous vector field over an open set $\Delta \subset S$
+  
+  If S is smooth
+
+  \[Flux_S(F) = \iint_D(F\cdot N)(x(u,v),y(u,v),z(u,v)) ||\pd{r}{u}(u,v)\times\pd{r}{v}||du dv\]
+  \[= \iint_S(F.N) d\sigma\]
+\end{definition}
+
+\textbf{Remark}
+$F = P\vec{i}+Q\vec{j}+R\vec{k}$ $S =Gr_f =\{ (x,y,z) \in \R^3 \quad :(x,y)\in D\quad; z = g(x,y)\}$
+
+\[
+  Flux_S(f) = 
+\begin{cases}
+  \iint_D\left[R - \pd{g}{x}(x,y)P - \pd{g}{y}(x,y) Q\right](x,y,g(x,y))dx dy 
+  \\ \quad \quad \text{if S is oriented upward} \\
+  \iint_D \left[\pd{g}{x}(x,y)P((x,y,g(x,y)) + \pd{g}{y}(x,y)Q(x,y,g(x,y))- R(x,y,g(x,y)\right] dx dy 
+  \\\quad\quad \text{ if S is oriented downward}
+\end{cases}
+\]
+\begin{example}
+  1)
+\begin{center}
+\includegraphics[width=0.8\textwidth]{vect_flux_ex01.jpg}
+\end{center}
+\end{example}
+\textbf{Remark}
+
+\[\iint_S(F.N)d\sigma = \iint_D F(x(u,v),y(u,v),z(u,v)).(\pd{r}{u}\times \pd{r}{u} \times \pd{r}{v}(u,v))dudv\]
+\[\iint_D 
+  \begin{aligned}
+  \begin{vmatrix}
+    P(x(u,v),y(u,v),z(y,v))&\quad Q(x(u,v),y(u,v),z(u,v)) &\quad R(x(u,v),y(u,v),z(u,v)) \\
+    \pd{x}{u}(u,v)&\quad\pd{y}{u}(u,v) &\quad \pd{z}{u}(u,v))\\
+    \pd{x}{v}(u,v)&\quad \pd{y}{v}(u,v)&\quad \pd{z}{v}(u,v) \\
+  \end{vmatrix}
+  \end{aligned}du dv
+\]
+
+\begin{example}
+  1 ..
+\begin{center}
+\includegraphics[width=0.8\textwidth]{vect_flux_ex02.jpg}
+\end{center}
+\end{example}
+There are two methods to compute the flux of vector field over a surface S .
+
+1) if S is boundary of a solid domain $\Omega \subset \R^3, (i-e S=\partial D )$, 
+
+(S is closed. without boundary $\partial S = \phi$)
+we can  use the divergence theorem
+
+2) If S is not closed, $C = \partial S$ is piece-wise curve we can use Stokes's theorem
+
+\begin{theorem}
+  \underline{\textbf{Divergence theorem (Ostrograsky's theorem)}} 
+
+Let $\Omega$ be a closed solid bounded  region in $\R^3$ by 
+
+closed smooth piece-wise regular surface $S = \partial \Omega$ oriented outward from $\Omega$
+
+If $F = P\vec{i}+Q\vec{j}+R\vec{k}$ is of class $C^1$ over $\Omega$ then;
+
+\[Flux_S(F) = \iiint div(F) dv = \iiint_\Omega\left(\pd{P}{x} + \pd{Q}{y} + \pd{R}{Z}\right)(x,y,z) dx dy dz\]
+\end{theorem}
+
+\begin{theorem}
+  \underline{\textbf{Stockes's theorem}}
+  Let S be orented by N ; $C = \partial S$ is a piece-wise smooth simple closed curve with positive orientation. If $F = P\vec{i}+Q\vec{j}+R\vec{k}$ is $C^1$ vector field over a open region $\Delta \subset S,$ then:
+
+  \[\oint_{C = \partial S}F\cdot dr = \iint_S(Curl(F)\cdot N)d\sigma = Flux_S(Curl(F))\]
+\end{theorem}
+
+\begin{example}
+  1)
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Stockes_ex01.jpg}
+\end{center}
+\end{example}
+
+\begin{example}
+  stokes example
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Stokes_ex1.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Stokes_ex2.jpg}
+\end{center}
+\end{example}
+\end{document}
+
+

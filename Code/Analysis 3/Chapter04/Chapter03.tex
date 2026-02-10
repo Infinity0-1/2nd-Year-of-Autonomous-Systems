@@ -1,0 +1,378 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{geometry}
+\usepackage{titlesec}
+\geometry{a4paper, margin=1in}
+
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{3d, arrows.meta}
+
+% Theorem environments
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+
+% Paragraph formatting
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{1em}
+
+% Add extra vertical space
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+\title{Chapter 03: Numerical series }
+\author{Notes from prof zeglaoui course}
+
+\hbadness=10000
+\hfuzz=\maxdimen
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\F}{\mathbb{F}}
+
+% --- Derivatives ---
+\newcommand{\pd}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[3]{\dfrac{\partial^2 #1}{\partial #2\,\partial #3}}
+\newcommand{\pddx}[2]{\dfrac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\dd}[2]{\dfrac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\ddd}[2]{\dfrac{\mathrm{d}^2 #1}{\mathrm{d} #2^2}}
+\newcommand{\diff}{\,\mathrm{d}}
+
+%% vertical vector macro
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+
+\begin{document}
+
+\maketitle
+
+\vspace{2em}
+
+\section{Generalities}
+\begin{definition}
+  Let ($U_n$) be a sequence of real( or complex) numbers. By numerical series of the general term $U_n$ , that we denote by $\sum_{n \in \N}U_n$, we mean the couple$((U_n),(\mathcal{U}_n))$  of real (or complex) sequences, where 
+  ($\mathcal{U}_n$) is the sequence  of partial sums of $\sum U_n$ , defined by ;
+  \[
+    \mathcal{U}_n = u_0 + u_1 + \dots + u_n = \sum_{k = 0}^n U_k \quad;  \forall_k \in \N, 
+  \]
+\end{definition}
+
+\begin{example}
+  ..
+  
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Generalities_ex01.jpg}
+\end{center}
+\end{example}
+
+\begin{definition}
+  Let $\sum_{n \in \N} U_n$ numerical series and ($\mathcal{U}_n$). its sequence of partial sums
+
+  1) the series $\sum_{n\in\N} U_n$ is said to be convergent($Cv$)if 
+
+  ($\mathcal{U}_n$ converges; the limit
+  $\mathcal{U} = \lim\limits_{n \to +\infty}\mathcal{U}_n$ is called the sum of the series $\sum_{n\in\N}$, often 
+  denoted by : $\mathcal{U} = \sum_{n = 0}^{\infty} U_n$
+
+  2) the series $\sum U_n$ is said to be divergent if ($\mathcal{U}_n$) diverges
+
+  3) the nature of $\sum_{n\in \N}U_n$ is the fact that it is convergent or divergent
+\end{definition}
+
+\begin{example}
+ 1) 
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Generalities_ex02.jpg}
+\end{center}
+
+2)
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Generalities_ex02.jpg}
+\end{center}
+\end{example}
+
+\begin{theorem}
+  \[
+    \sum U_n \quad converge \implies \lim\limits_{n \to + \infty} (U_n) = 0
+  \]
+  \textbf{Proof}
+
+  Because $U_n = \mathcal{U}_n - \mathcal{U}_{n-1} \quad, \forall n$
+  
+  \[
+    U_n  \quad converges \Leftrightarrow (\mathcal{U}_n)converges \implies \lim\limits U_n = \mathcal{U} -\mathcal{U} = 0
+  \]
+\end{theorem}
+
+\textbf{Remark}
+
+\[
+\lim U_n \neq 0 \implies \sum U_n \text{ diverges}
+\]
+
+\begin{example}
+  the harmonic series
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Generalities_ex03.jpg}
+\end{center}
+\end{example}
+
+\section{Positive series:}
+
+\begin{definition}
+  the real series  $\sum_{n \in \N} U_n$ is said to be positive if there exists $N \in \N$ st: $\forall n \geq N\quad U_n \geq 0$
+\end{definition}
+
+\textbf{Remark:}
+if $\sum_{n \in \N} U_n$ is positive then the partial sums sequence $\mathcal{U}_n$ is an increasing sequence
+
+
+Recall that if  $(\alpha_n)_{n \in \N}$ is an increasing real sequence either ($\alpha_n$) converges to its supremum(i.e $\lim \alpha_n = sup_{n\in \N}(\alpha_n)$ when it's upper bounded) or $\lim \alpha_n = +\infty$ if not
+
+\underline{\textbf{proposition:}} comparision criterion
+
+Let $\sum_{n \in \N} U_n$ and $\sum_{n \in \N} V_n$ be two positive series st:
+\[
+  \exists N \in \N \quad, \forall n \geq N\quad U_n \leq V_n
+\]
+so, $\sum_{n \in \N} V_n$ converges $\implies$  $\sum_{n \in \N} U_n$ converges
+
+then  $\sum_{n \in \N} U_n$ diverges $\implies$ $\sum_{n \in \N} V_n$ diverges
+
+\underline{\textbf{Proof:}}
+
+if ($U_n)$ is the sequence of partial sums of $\sum_{n \in \N} U_n$
+
+and ($V_n)$ is the sequence of partial sums of $\sum_{n \in \N} V_n$
+
+$U_n \leq V_n$ hence:
+$\sum_{n \in \N} V_n$ converges(converges) $\Leftrightarrow$$(V_n)_n$converges $\implies$ $(V_n)_n$ is upper bounded 
+$\implies$ $(U_n)_n$ is upper bounded too $\implies(U_n)$ converges $\implies$$\sum_{n \in \N} U_n$ converges
+
+\begin{example}
+  ..
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{positive_series_ex01.jpg}
+\end{center}
+\end{example}
+
+
+\underline{\textbf{Corollary:}} equivalance criterion
+
+Let $\sum_{n \in \N} U_n$ and  $\sum_{n \in \N} V_n$ be a positive  series
+
+1)
+if $\exists a > b >0, \quad \exists N \in \N;\quad \forall n> N$
+
+$0 \leq a \leq \dfrac{U_n}{V_n}\leq b $
+
+$U_n = O(V_n)$
+
+then  $\sum_{n \in \N} U_n$ and $\sum_{n \in \N} V_n$ have the same nature
+
+2) if $\lim\dfrac{U_n}{V_n} = l > 0 $ then $\sum_{n \in \N} U_n$ and $\sum_{n \in \N} U_n$ have the same nature also($U_n \sim V_n$)
+
+3) if $U_n = O(V_n)$, that is   $\lim\dfrac{U_n}{V_n} = 0$ then :
+
+$\sum V_n$ converges $\implies \sum U_n$ converges (also ,$\sum U_n$ div $\implies \sum V_n$ div) 
+
+\underline{\textbf{proof:}}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{proof_Landou.jpg}
+\end{center}
+
+
+\underline{\textbf{Landau's symbols:}}
+\[U_n = o(V_n) \text{ if } \lim\dfrac{U_n}{V_n} = 0\]
+\[U_n \sim (V_n) \text{ if } \lim\dfrac{U_n}{V_n} = 1\]
+\[U_n = O(V_n) \text{ if } (\dfrac{U_n}{V_n}) \text{ is bounded}\]
+
+\begin{example}
+  for $\alpha > 0$
+  \[
+    sin(\dfrac{1}{n^\alpha}) \sim \dfrac{1}{n^\alpha}
+  \]
+  \[
+    ln(1 +\dfrac{1}{n^\alpha} ) \sim \dfrac{1}{n^\alpha}
+  \]
+\end{example}
+
+\underline{\textbf{Proposition}} D'Alenbert's and Cauchy's criterion
+
+1)(D'Alenbert) If:
+If $\lim \dfrac{U_{n+1}}{U_n} = l \geq 0$ , then $\sum U_n$ converges if $0 \leq l < 1$   
+
+$\quad \sum U_n$ div if $  l > 1$ 
+
+2)(Cauchy) If:
+
+$\lim\sqrt[n]{U_n} = l \geq 0\quad,$ then  $\sum U_n$ converges if $0 \leq l <1$   
+
+$\quad \sum U_n$ div if $  l > 1$ 
+
+3) if $l =1 $ , we may use another criterion
+
+\begin{example}
+..
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Alber_Cauchy_ex01.jpg}
+\end{center}
+\end{example}
+
+\underline{\textbf{Remark + example}}
+
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Remark_ex.jpg}
+\end{center}
+
+\begin{theorem} Comparision with an upper umpropre integral
+  Let $f: \left[0, +\infty \right[ \to \left[0, +\infty \right[$
+      be a decreasing continuous function and $U_n = f(n)$
+
+      the series $\sum_{n \in \N} U_n = \sum_{n \in \N} f(n)$ have the same nature as the sequence($\int_0^n f(x)dx)_{n\in \N}$ Furthermore:
+\[
+  \forall p \in \N \quad \int_{p + 1}^{\infty} f(x)dx \leq R_p = U -U_p \leq \int_{p}^{\infty} f(x)dx
+\]
+\end{theorem}
+
+\underline{\textbf{Proof}}
+Since $f$ is decreasing on $\left[h, h+1\right]$, then:
+\[ f(h+1) \leq f(x) \leq f(h), \quad \forall x \in \left[h, h+1\right] \]
+\[ U_{h+1} \leq f(x) \leq U_n\]
+\[ U_{h+1} \int_h^{h+1} dx \leq \int_h^{h+1}f(x)dx \leq U_n\int_h^{h+1} dx\]
+\[ U_{h+1}  \leq \int_h^{h+1}f(x)dx \leq U_n\]
+\[\implies \sum_{h = 0}^{n-1} U_{h+1}  \leq \sum_{h = 0}^{n-1}\int_h^{h+1}f(x)dx \leq \sum_{h = 0}^{n-1}U_n\]
+
+\[ U_n - U_0\leq  \int_0^n f(x) dx \leq U_{n-1}\]
+($U_n)$ and  ($\int_0^n f(x) dx$) are increasing so:
+\[
+\begin{aligned}
+  \sum U_n \text{ converges } &\Leftrightarrow (U_n) \text{ converges } \Leftrightarrow (U_{n-1}) \text{converges} \\
+                       &\Leftrightarrow (U_n) \text{ is upperbounded} \\
+                       &\implies (\int_0^n f(x) dx) \text{ is upperbounded}\\
+                       &\implies (\int_0^n f(x) dx) \text{ converges }\\
+                       \text{ conversly:} \int_0^n f(x) dx \text{ converges } \\
+                       &\Leftrightarrow  \int_0^n f(x) dx \text{ is upperbouned} \\
+                       &\implies (U_n)  \text{ is upperbounded} \\
+                       &\implies (U_n) \text { converges }
+\end{aligned}
+\]
+
+\begin{example}
+  ..
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Bertrand_series.jpg}
+\end{center}
+\end{example}
+
+\section{Alternating series}
+
+\begin{definition}
+  A numerical series $\sum U_n$  is said to be alternating  if its general term $U_n$ change sign infinitly many times 
+\end{definition}
+
+\underline{\textbf{Remark}}
+
+
+$\sum U_n$ is alternating if there exist two subsequences 
+
+$(a_n) = (U_{\varphi_n}) \text{ and } (b_n) = (U_{\psi_n}) $st:
+
+$(a_n) > 0$ and $ (b_n) < 0 $
+
+\begin{example}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Alternating_ex01.jpg}
+\end{center}
+\end{example}
+
+\begin{definition}
+  Absolute convergence and semi convergence
+
+  A numerical series $\sum U_n$ is said to be absolutely convergent if the positive series $\sum_{n \in \N} |U_n|$ converges
+\end{definition}
+
+\begin{theorem}
+  if $\sum U_n$ is absolutely convergent then $\sum U_n$ converges 
+\end{theorem}
+\underline{\textbf{Proof}}
+
+Let $V_n = U_n + |U_n| > 0 \quad, \forall n\in \N  $  and $0 \leq V_n \leq 2|U_n|$ , by comparision criterion
+
+if $\sum U_n$ converges then $\sum V_n$ converges $\implies \sum U_n = \sum V_n -\sum |U_n|$ converges
+
+\begin{example}
+  The Abel's series $\sum \dfrac{cos(n\theta)}{n^\alpha}$ and  $\sum \dfrac{sin(n\theta)}{n^\alpha}$ convergent absolutely 
+
+  if  $ \alpha >1 $ because $\left|\dfrac{cos(n\theta)}{n^\alpha}\right| \leq \dfrac{1}{n^\alpha}$ and $\left|\dfrac{sin(n\theta)}{n^\alpha}\right| \leq \dfrac{1}{n^\alpha}$
+\end{example}
+
+\begin{definition}
+  We say that $\sum U_n$  conditionally (or semi) convergent, if $\sum U_n$ converges and $\sum |U_n|$ divergent
+\end{definition}
+
+\begin{example}
+  ..
+\begin{center}
+\includegraphics[width=0.8\textwidth]{semi_con_ex_part01.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{semi_con_ex_part02.jpg}
+\end{center}
+\end{example}
+
+\begin{theorem}\underline{Leibniz}
+
+  Let $U_n = (-1)^n a_n \mid a_n > 0 \quad,a_{n+1} \leq a_n \quad,\forall n \in \N$ and $\lim a_n = 0$ ,then:
+
+  $\sum (-1)^na_n$ Converges
+\end{theorem}
+\begin{example}
+  $\sum \dfrac{(-1)^n}{n^\alpha}$ converges $\Leftrightarrow \alpha >0$
+
+\[S = \sum_{n = 3}^{+\infty}\frac{1}{n^2 + 3n +2 } = \sum_{n = 3}^{+\infty}\frac{1}{(n+1)(n+2)} = \sum_{n = 3}^{+\infty}\left(\frac{1}{n+1} -\frac{1}{n+2}\right) = 1/4\]
+\end{example}
+
+\begin{theorem}(Abel's criterion)
+  If: $U_n = a_nb_n$ st:
+
+  1) $a_n \geq 0\quad; a_{n+1} \leq a_n \quad \forall n \in \N \text{ and } \lim a_n = 0$
+
+  2)$\exists M \geq 0 \quad, \forall n \in \N \quad \left|\sum_{h = 0}^n b_h\right| \leq M \text{ then } \sum U_n \text{ converges}$
+\end{theorem}
+
+\begin{example}
+
+  .
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Abel_ex_part01.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Abel_ex_part02.jpg}
+\end{center}
+\end{example}
+
+
+\end{document}
+
+

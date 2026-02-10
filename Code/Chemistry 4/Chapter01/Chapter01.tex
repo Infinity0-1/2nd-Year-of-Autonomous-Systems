@@ -1,0 +1,95 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{graphicx}
+
+\geometry{a4paper, margin=1in}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{3d, arrows.meta}
+
+% Theorem environments
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+
+% Paragraph formatting
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{1em}
+
+% Add extra vertical space
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+\title{Chapter 01: Electrochemical Kinetics}
+\author{Notes from Prof Aoudj}
+
+\hbadness=10000
+\hfuzz=\maxdimen
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\F}{\mathbb{F}}
+
+\newcommand{\pd}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[3]{\dfrac{\partial^2 #1}{\partial #2\,\partial #3}}
+\newcommand{\pddx}[2]{\dfrac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\dd}[2]{\dfrac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\ddd}[2]{\dfrac{\mathrm{d}^2 #1}{\mathrm{d} #2^2}}
+\newcommand{\diff}{\,\mathrm{d}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\begin{document}
+
+\maketitle
+
+\vspace{3em}
+
+\section{Introduction}
+
+The thermodynamic study of an electrochemical system is insufficient to study the principal 
+phenomena (it only tells us whether a transformation is possible or spontaneous).
+The study of the reaction rate provides complementary elements.
+
+
+\section{Overpotential and polarization curve}
+\subsection{Overpotential}
+
+If an electrode is crossed by a current I,(because of a polarization:put a potential).It takes a potential E 
+$\boxed{E \neq E_{eq}}$. So, the overpotential $\boxed{\mu : \mu = E - E_{eq}}$
+
+\underline{\textbf{Reminder:}}
+
+what's $E_{eq}$, Eq = Equilibrium potential given by Nernst formula:
+For Redox reaction: 
+$$ \quad \quad Ox + ne^- \rightleftharpoons red \to E_{eq_{Ox/Red}} = E^{\circ}_{Ox/Red}+
+\frac{0.06}{n} log(\frac{C_{Ox}}{C_{Red}})$$
+
+$E_eq$ corresponds to the potential when I = 0 
+
+The electrochemcial reaction takes place in the direction where $\Delta G < 0$ , So we 
+have always $\boxed{\mu.I \geq 0 }$
+
+By converntion, $I = I^+$ (Positive) for oxidation 
+
+ $I = I^-$ (negative) for reduction
+ 
+ Let's see (I = f(E)) , $E(v) \neq U $ (E(v) is potential, U is ddp (difference de potential)
+ 
+\begin{center}
+\includegraphics[width=0.8\textwidth]{photos/I_function_of_E.jpg}
+\end{center}
+
+\end{document}

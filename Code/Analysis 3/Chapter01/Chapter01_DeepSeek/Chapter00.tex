@@ -1,0 +1,1408 @@
+%mathcal(F) // mathcal relation  // linear map L:
+% \begin{example}\end{example}
+
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{geometry}
+\usepackage{titlesec}
+\geometry{a4paper, margin=1in}
+
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{3d, arrows.meta}
+
+% Theorem environments
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+
+% Paragraph formatting
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{1em}
+
+% Add extra vertical space
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+\title{Chapter 0 : Functions of Several Variables}
+\author{Author : Ahmed ZEGLAOUI}
+\date{A Day}
+
+\hbadness=10000
+\hfuzz=\maxdimen
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\F}{\mathbb{F}}
+% --- Derivatives ---
+\newcommand{\pd}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[3]{\dfrac{\partial^2 #1}{\partial #2\,\partial #3}}
+\newcommand{\pddx}[2]{\dfrac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\dd}[2]{\dfrac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\ddd}[2]{\dfrac{\mathrm{d}^2 #1}{\mathrm{d} #2^2}}
+\newcommand{\diff}{\,\mathrm{d}}
+
+%% vertical vector macro
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\begin{document}
+
+\maketitle
+
+\vspace{2em}
+
+\section{Generalities}
+\subsection{Definition of a functions of several variables}
+
+
+Let $E, F$ be two sets.
+
+The product $E \times F = \{(x, y) \mid x \in E \text{ and } y \in F\}$.
+
+\vspace{1em}
+
+\begin{definition}
+  A relation $\mathcal{R}$ from $E$ to $F$ is a given subset $G$ (or $G_R$) of $E \times F$.
+
+We say that $y$ is the image of $x$ (and $x$ is the pre-image of $y$) if $(x,y) \in G$.
+\end{definition}
+
+\vspace{1em}
+
+
+The inverse relation $\mathcal{R}^{-1}$ of $\mathcal{R}$ is from $F$ to $E$ defined by:
+\[
+  y\mathcal{R}^{-1}x  \Leftrightarrow  x\mathcal{R}y 
+\]
+\[
+  G_{\mathcal{R}^{-1}} = s(G_\mathcal{R}), \text{ where } s: E \times F \to F \times E, (x,y) \mapsto (y,x)
+\]
+
+\vspace{1em}
+
+\begin{definition}
+A function $f : E \to F$ is a relation from $E$ to $F$ such that:
+
+For each $x \in E$, there exists at most one image $y \in F$.
+
+The domain of $f$, denoted $\text{Dom}(f)$, is the subset:
+\[
+\text{Dom}(f) = \{x \in E \mid \text{there exists an image of } x\}
+\]
+If $x \in \text{Dom}(f)$, we denote $f(x)$ its image.
+
+When $\text{Dom}(f) = E$, $f$ is called a map from $E$ to $F$.
+
+The graph of $f$ is:
+\[
+G_f = \{(x,y) \in E \times F \mid x \in \text{Dom}(f) \text{ and } y = f(x)\}
+\]
+If $F = \R$: $f: E \to \R$ is a real function.
+
+If $F = \C$: $f: E \to \C$ is a complex function.
+\end{definition}
+
+\vspace{1em}
+
+\begin{definition}
+Let $n,m \in \mathbb{N}$. A function $\R^n \to \R^m$ is called a function of $n$ variables:
+\[
+f: \R^n \to \R^m
+\]
+\[
+(x_1,\dots,x_n) \mapsto (f_1(x_1,\dots,x_n),\dots,f_m(x_1,\dots,x_n))
+\]
+We denote by $f_j$ the $j$-th component (or projection $\text{Pr}_j$) of $f$:
+\[
+f_j: \R^n \to \R
+\]
+\[
+(x_1,\dots,x_n) \mapsto f_j(x_1,\dots,x_n)
+\]
+Another way to write it:
+\[
+\text{Pr}_j: \R^m \to \R, \quad \forall j \in \{1,\dots,m\}
+\]
+\[
+(y_1,y_2,\dots,y_j,\dots,y_m) \mapsto y_j
+\]
+\[
+f = (f_1,\dots,f_m) = \sum_{j=1}^m f_j e_j \quad \text{where } e_j = (0,0,\dots,1,\dots,0)
+\]
+
+If $m = 1$, $f$ is a real function.
+
+If $m > 1$, $f$ is a vector function.
+
+The range (or image) of $f$ is the subset of $\R^m$ defined by:
+\[
+\text{range}(f) = \{y \in \R^m \mid \exists x \in \text{Dom}(f), y = f(x)\}
+\]
+\end{definition}
+
+\vspace{1em}
+
+\begin{example}
+\begin{enumerate}
+  \item $\mathcal{L}(\R^n, \R^m)$ - the set of linear maps from $\R^n$ to $\R^m$ - is a subset of $F(\R^n,\R^m)$
+    
+    where $\mathcal{F}(\R^n,\R^m)$ is the set of all functions from $\R^n$ to $\R^m$.
+    
+    \item An affine function:
+    \[
+    f: \R^n \to \R^m
+    \]
+    \[
+    x \mapsto A x + b
+    \]
+    where $b \in \R^m$ and $A \in M_{(m,n)}(\R)$.
+    
+    \item For $\R^2 \to \R$:
+    \[
+    f(x,y) = \vect{x & y} \vect{\alpha \\ \beta} = \alpha x + \beta y
+    \]
+\end{enumerate}
+\end{example}
+
+\vspace{2em}
+
+\subsection{Operations on Functions of Several Variables}
+
+\vspace{1em}
+
+1) $\forall f,g \in \mathcal{F}(\R^n,\R^m), \forall \alpha,\beta \in \R$
+\[
+\alpha f + \beta g: \R^n \to \R^m
+\]
+\[
+x \mapsto \alpha f(x) + \beta g(x)
+\]
+$(\mathcal{F}(\R^n,\R^m);+;\cdot)$ is a vector space.
+
+2) If $f \in \mathcal{F}(\R^n,\R^m)$ and $g \in\mathcal{F}(\R^m,\R^p)$ then:
+\[
+  g \circ f \in \mathcal{F}(\R^n,\R^p)
+\]
+\[
+\R^n \xrightarrow{f} \R^m \xrightarrow{g} \R^p
+\]
+\[
+x \mapsto f(x) \mapsto g(f(x))
+\]
+
+3) Let $f,g \in \mathcal{F}(\R^n,\R)$ be two scalar functions.
+
+The product $f \cdot g \in \mathcal{F}(\R^n,\R)$ defined by:
+\[
+(f \cdot g)(x) = f(x) \cdot g(x), \quad \forall x \in \text{Dom}(f) \cap \text{Dom}(g)
+\]
+If $g(x) \neq 0$, $\forall x \in \text{Dom}(g)$, then $\dfrac{1}{g}: x \to \dfrac{1}{g(x)}$
+\[
+\text{Dom}\left(\frac{1}{g}\right) = \{x \in \text{Dom}(g) \mid g(x) \neq 0\}
+\]
+and $\dfrac{f}{g} = f \cdot \left(\dfrac{1}{g}\right)$.
+
+\vspace{1em}
+
+\begin{example}
+\begin{enumerate}
+    \item A monomial function of degree $P$ is:
+    \[
+    (x_1,\dots,x_n) \mapsto \alpha x_1^{p_1} x_2^{p_2} \dots x_n^{p_n}
+    \]
+    \[
+    p_1 + p_2 + \dots + p_n = P
+    \]
+    
+    \item A homogeneous polynomial of degree $P$ is a finite sum of monomial functions of degree $P$.
+    
+    \item A polynomial function is a finite sum of homogeneous polynomial functions.
+    
+    \item A rational function is the quotient of two polynomial functions.
+\end{enumerate}
+\end{example}
+
+\vspace{1em}
+
+\begin{definition}
+The graph of a function $f: \R^n \to \R^m$ is the subset of $\R^n \times \R^m \cong \R^{n+m}$ defined by:
+\[
+G_f = \{(x,y) \in \R^n \times \R^m \mid x \in \text{Dom}(f) \text{ and } y = f(x)\}
+\]
+\end{definition}
+
+\vspace{1em}
+
+\begin{remark}
+If we consider the function:
+\[
+\tilde{f}: \text{Dom}(f) \to \R^{n+m}
+\]
+\[
+x \mapsto (x,f(x))
+\]
+then $\text{range}(\tilde{f}) = G_f$.
+
+$\tilde{f}$ is a parametrization of $G_f$.
+\end{remark}
+
+\vspace{1em}
+
+\begin{example}
+\begin{enumerate}
+    \item Affine function $f: \R \to \R$, $x \mapsto ax + b$:
+    \[
+    G_f = \{(x,y) \in \R^2 \mid x \in \R \text{ and } y = ax + b\}
+    \]
+    
+    \item $f: \R^2 \to \R$, $(x,y) \mapsto \sqrt{16 - 4x^2 - y^2}$:
+    \[
+    \text{Dom}(f) = \{(x,y) \in \R^2 \mid 4x^2 + y^2 \leq 16\}
+    \]
+    \[
+    \text{range}(f) = \{z \in \R \mid \exists(x,y) \in \text{Dom}(f), z = \sqrt{16 - 4x^2 - y^2}\}
+    \]
+    Since $4x^2 + y^2 \geq 0$, we have:
+    \[
+    0 \leq 16 - 4x^2 - y^2 \leq 16 \Rightarrow 0 \leq \sqrt{16 - 4x^2 - y^2} \leq 4
+    \]
+    Thus $\text{range}(f) = [0,4]$.
+    
+    The graph is:
+    \[
+    G_f = \left\{(x,y,z) \in \R^3 \mid (x,y) \in \text{Dom}(f) \text{ and } \begin{cases} z^2 + 4x^2 + y^2 = 16 \\ z \geq 0 \end{cases} \right\}
+    \]
+\end{enumerate}
+\end{example}
+
+\vspace{2em}
+
+\section{Limits and Continuity}
+\subsection{Limits}
+
+\vspace{1em}
+
+\begin{definition}
+Let $f: \R^n \to \R$, $l \in \R$, and $a \in \R^n$.
+\[
+\lim_{x \to a} f(x) = l
+\]
+\[
+\Leftrightarrow \forall \epsilon > 0, \exists \delta > 0, \forall x \in \text{Dom}(f); 0 < d(x,a) < \delta \implies |f(x) - l| < \epsilon
+\]
+\[
+\lim_{x \to a} f(x) = +\infty \ (\text{resp. } -\infty)
+\]
+\[
+\Leftrightarrow \forall \alpha > 0, \exists \delta > 0, \forall x \in \text{Dom}(f); 0 < d(x,a) < \delta \implies f(x) > \alpha \ (\text{resp. } f(x) < -\alpha)
+\]
+where $d: \R^n \times \R^n \to \R_+$ is one of the following distances:
+
+Euclidean distance:
+\[
+d_2((x_1,\dots,x_n),(y_1,\dots,y_n)) = \sqrt{\sum_{i=1}^n (y_i - x_i)^2}
+\]
+
+Manhattan distance:
+\[
+d_1((x_1,\dots,x_n),(y_1,\dots,y_n)) = \sum_{i=1}^n |y_i - x_i|
+\]
+
+Chebyshev distance:
+\[
+d_{\infty}((x_1,\dots,x_n),(y_1,\dots,y_n)) = \max_{1 \leq i \leq n} |y_i - x_i|
+\]
+\end{definition}
+
+\vspace{1em}
+
+\begin{remark}
+If $n = 1$, then $d_1 = d_2 = d_{\infty}$.
+\end{remark}
+
+\vspace{1em}
+
+\begin{proposition}
+\[
+\lim_{x \to a} f(x) = l \Leftrightarrow \forall (x_n) \subset \text{Dom}(f), \lim_{n \to +\infty} x_n = a \Rightarrow \lim_{n \to \infty} f(x_n) = l
+\]
+\end{proposition}
+
+\vspace{1em}
+
+\begin{remark}
+If the limit $l$ exists, it is unique.
+\end{remark}
+
+\vspace{1em}
+
+\begin{definition}
+Let $f = (f_1,\dots,f_m): \R^n \to \R^m$
+\[
+x \mapsto (f_1(x),\dots,f_m(x))
+\]
+\[
+\forall j \in \{1,\dots,m\}, \quad l_j = \lim_{x \to a} f_j(x)
+\]
+If $\forall j; l_j \in \R$, then $\lim\limits_{x \to a} f(x) = l = (l_1,\dots,l_m) \in \R^m$.
+
+If $\exists j; l_j = \pm \infty$, then $\lim\limits_{x \to a} f(x)$ does not exist.
+\end{definition}
+
+\vspace{1em}
+
+\begin{definition}
+$f = (f_1,\dots,f_m): \R^n \to \R^m$ is continuous at a point $a \in \text{Dom}(f)$ if:
+\[
+\lim_{x \to a} f(x) = f(a)
+\]
+\end{definition}
+
+\vspace{1em}
+
+\begin{example}
+$f$ continuous at $x = a$
+\[
+\Leftrightarrow \forall (x_n) \subset \text{Dom}(f), \lim_{n \to +\infty} x_n = a \Rightarrow \lim_{n \to +\infty} f(x_n) = f(a)
+\]
+\end{example}
+
+\vspace{1em}
+
+\begin{remark}
+To prove that $\lim\limits_{x \to a} f(x)$ does not exist:
+
+\underline{\textbf{1st method}}:
+
+We can give two sequences $(x_n),(y_n)$ from $\text{Dom}(f)$ that converge to $a$
+\[
+\begin{cases}
+\lim\limits_{n \to \infty} x_n = a \\
+\lim\limits_{n \to \infty} y_n = a
+\end{cases}
+\]
+and $\lim\limits_{n \to +\infty} f(x_n) \neq \lim\limits_{n \to +\infty} f(y_n)$.
+
+\underline{\textbf{2nd method}}:
+
+We give two paths (continuous maps $[0,\delta) \to \text{Dom}(f)$) on $\text{Dom}(f)$ with $\gamma(0) = a$
+\[
+\begin{cases}
+\gamma_1: [0, \delta_1) \to \text{Dom}(f), \gamma_1(0) = a \\
+\gamma_2: [0, \delta_2) \to \text{Dom}(f), \gamma_2(0) = a
+\end{cases}
+\]
+If $\lim\limits_{t \to 0^+} f(\gamma_1(t)) \neq \lim\limits_{t \to 0^+} f(\gamma_2(t))$, then the limit does not exist.
+\end{remark}
+
+\vspace{1em}
+
+\begin{example}
+Consider $f(x,y) = \dfrac{x^2 - y^2}{x^2 + y^2}$.
+\[
+\begin{cases}
+\gamma_1: [0, +\infty) \to \R^2 \\
+t \mapsto (t,0)
+\end{cases}
+\]
+\[
+\begin{cases}
+\gamma_2: [0, +\infty) \to \R^2 \\
+t \mapsto (0,t)
+\end{cases}
+\]
+\[
+f(\gamma_1(t)) = \frac{t^2 - 0^2}{t^2 + 0^2} = 1
+\]
+\[
+f(\gamma_2(t)) = \frac{0^2 - t^2}{0^2 + t^2} = -1
+\]
+Since $\lim\limits_{t \to 0^+} f(\gamma_1(t)) \neq \lim\limits_{t \to 0^+} f(\gamma_2(t))$, the limit does not exist.
+\end{example}
+
+\vspace{1em}
+
+\subsection*{\underline{\textbf{Properties:}}}
+
+\underline{\textbf{1) The Linearity:}}
+\[
+\lim_{x \to a} f(x) = l_1 \in \R^m \text{ and } \lim_{x \to a} g(x) = l_2 \in \R^m
+\]
+\[
+\text{then } \forall \alpha, \beta \in \R, \lim_{x \to a} [\alpha f(x) + \beta g(x)] = \alpha l_1 + \beta l_2
+\]
+
+\underline{\textbf{2) Limit of Product and quotient}}
+\[
+f \times g: \R^n \to \R
+\]
+\[
+\text{If } \lim_{x \to a} f(x) = l_1 \text{ and } \lim_{x \to a} g(x) = l_2
+\]
+\[
+\text{Then } \lim_{x \to a} (fg)(x) = l_1 l_2
+\]
+\[
+\text{And if } g(x) \neq 0, \lim_{x \to a} \frac{f(x)}{g(x)} = \frac{l_1}{l_2}
+\]
+
+\underline{\textbf{3) Limit of Composed functions}}
+\[
+\text{If } f: \R^n \to \R^m \text{ continuous at } a \text{ and } \lim_{y \to f(a)} g(y) = l
+\]
+\[
+\text{then } \lim_{x \to a} (g \circ f)(x) = l
+\]
+
+\vspace{1em}
+
+\begin{definition}
+1) Let $f: \R^n \to \R$ and $\phi \neq V \subset \text{Dom}(f)$.
+
+We say that $f$ is continuous on $V$ if:
+\[
+\forall (x_n) \subset V, (x_n) \to x \in \text{Dom}(f) \implies \lim_{n \to +\infty} f(x_n) = f(x)
+\]
+
+2) $f = (f_1,\dots,f_m): \R^n \to \R^m$ continuous on $V \subset \text{Dom}(f) = \bigcap_{j=1}^m \text{Dom}(f_j)$
+\[
+\Leftrightarrow \forall j \in \{1,2,\dots,m\}, f_j: \R^n \to \R \text{ is continuous on } V
+\]
+\end{definition}
+
+\vspace{2em}
+
+\subsection{The Case of $f: \R^2 \to \R$}
+
+\vspace{1em}
+
+\underline{\textbf{Euclidian distance}}
+\[
+d_1((x_1,x_2),(y_1,y_2)) = |y_1 - x_1| + |y_2 - x_2|
+\]
+\[
+d_2((x_1,x_2),(y_1,y_2)) = \sqrt{(y_1 - x_1)^2 + (y_2 - x_2)^2}
+\]
+\[
+d_{\infty}((x_1,x_2),(y_1,y_2)) = \max(|y_1 - x_1|, |y_2 - x_2|)
+\]
+
+\vspace{1em}
+
+\underline{\textbf{limit:}}
+
+$\lim\limits_{(x,y) \to (a,b)} f(x,y) = l \quad / l \in \R$
+\[
+\Leftrightarrow \forall \epsilon>0, \exists \delta>0; 0<d((x,y),(a,b))<\delta \implies |f(x,y) -l| < \epsilon
+\]
+
+\vspace{1em}
+
+\underline{\textbf{Example:}}
+
+\[
+f(x,y) = \frac{x^3}{x^2 + y^2}
+\]
+$\lim\limits_{(x,y)\to(0,0)}f(x,y) = 0$
+\[
+|f(x,y)| = \left|\frac{x^3}{x^2 + y^2}\right| = |x|\frac{x^2}{x^2 + y^2} \leq |x| \leq |x| + |y| = d_1((x,y),(0,0))
+\]
+\[
+\Leftrightarrow \forall \epsilon>0, \exists \delta=\epsilon>0,\forall(x,y) \in \R^2 -\{(0,0)\},\quad 0< |x|+|y| <\delta \implies |f(x,y)|  < \epsilon
+\]
+
+\vspace{1em}
+
+\underline{\textbf{Using polar coordinates:}}
+\[
+\text{Let: } \begin{cases} 
+x = a + r\cos\theta \quad ; \theta \in \R \\
+y = b + r\sin\theta \quad r> 0
+\end{cases}
+\]
+\[
+d_2((x,y), (a,b)) = \sqrt{(x - a)^2 + (y - b)^2} = \sqrt{(r\cos\theta)^2 +(r\sin\theta)^2} = r
+\]
+\[
+l \in \overline{\R} = \R \cup \{-\infty , \infty\}
+\]
+\[
+\lim_{(x,y) \to (a,b)} f(x,y) = l
+\]
+\[
+\Leftrightarrow \forall \epsilon>0, \exists \delta>0, 0<r <\delta \implies|f(a + r\cos\theta, b+ r\sin\theta) - l| < \epsilon
+\]
+\[
+\Leftrightarrow\forall \theta \in \R; \lim_{r \to 0^+} f(a + r\cos\theta, b+ r\sin\theta) = l
+\]
+
+\vspace{1em}
+
+\underline{\textbf{Example:}}
+\[
+f(x,y) = \frac{x^2 - y^2}{x^2 + y^2}, \quad (a,b) = (0,0)
+\]
+\[
+f(a + r\cos\theta, b + r\sin\theta) = \frac{r^2\cos^2\theta - r^2\sin^2\theta}{r^2\cos^2\theta + r^2\sin^2\theta} = \cos^2\theta - \sin^2\theta
+\]
+$\theta = 0, l =1$
+
+$\theta = \frac{\pi}{2}, l =-1$
+
+$\implies$ limit does not exist.
+
+\vspace{1em}
+
+\underline{\textbf{Example 2:}}
+\[
+f(x,y) = \frac{x^3 + y^3}{x^2 + y^2}
+\]
+\[
+f(r\cos\theta, r\sin\theta) = \frac{r^3(\cos^3\theta + \sin^3\theta)}{r^2} = r(\cos^3\theta + \sin^3\theta)
+\]
+\[
+0 \le | f(r\cos\theta, r\sin\theta)| = r|\cos^3\theta + \sin^3\theta| \le 2r \to 0
+\]
+So $\lim\limits_{(x,y)\to(0,0)}\dfrac{x^3 + y^3}{x^2 + y^2} = 0$
+
+\vspace{2em}
+
+\subsection{The Case of $f: \R^3 \to \R$}
+
+\vspace{1em}
+
+$\lim\limits_{(x,y,z) \to (x_0,y_0,z_0)} f(x,y,z) = l$
+
+\vspace{1em}
+
+\underline{\textbf{Using cylindrical coordinates:}}
+\[
+\begin{cases}
+x = x_0 + r\cos\theta \quad ;r >0\\
+y = y_0 + r\sin\theta \quad \theta \in \R \\
+z = z
+\end{cases}
+\]
+\[
+d_2((x,y,z),(x_0,y_0,z_0)) = \sqrt{(x - x_0)^2 + (y - y_0)^2 + (z -z_0)^2} = \sqrt{r^2 + (z - z_0)^2}
+\]
+
+We note $g_{\theta} = f(x_0 + r\cos\theta,y_0 + r\sin\theta,z)$
+\[
+\forall \epsilon >0; \exists \delta > 0; d_2((r,z),(0,z_0)) < \delta \implies |g_{\theta}(r,z) - l| < \epsilon
+\]
+\[
+\lim_{(x,y,z)\to(x_0,y_0,z_0)} f(x,y,z) = l
+\]
+\[
+\Leftrightarrow \forall\theta \in \R,\lim_{(r,z) \to (0,z_0)}g_{\theta}(r,z) = l
+\]
+
+\vspace{1em}
+
+\underline{\textbf{Example:}}
+\[
+f(x,y,z) = \frac{x^2 + y^2 - z^2}{x^2 + y^2 + z^2}
+\]
+\[
+g_{\theta}(r,z) = \frac{r^2 - z^2}{r^2 + z^2}
+\]
+Since $\lim g_{\theta}(r,z)$ does not exist, then
+$\lim\limits_{(x,y,z)\to(0,0,0)} \dfrac{x^2 + y^2 - z^2}{x^2 + y^2 + z^2}$ does not exist.
+
+\vspace{1em}
+
+\textbf{\underline{Using spherical coordinates:}}
+\[
+\begin{cases}
+x = x_0 + r\cos\theta\cos\varphi \\
+y = y_0 + r\cos\theta\sin\varphi \\
+z = z_0 + r\sin\theta
+\end{cases}
+\]
+\[
+g_{\theta,\varphi}(r) = f(x,y,z)
+\]
+\[
+d_2((x,y,z),(x_0,y_0,z_0)) = r
+\]
+So; 
+\[
+\lim_{(x,y,z) \to (x_0, y_0, z_0)} f(x,y,z) = l
+\]
+\[
+\Leftrightarrow \forall \theta, \varphi,\quad \lim_{r \to 0^+} g_{\theta,\varphi}(r) = l
+\]
+
+\vspace{1em}
+
+\underline{\textbf{Example:}}
+\[
+f(x,y,z) = \frac{x^2 + y^2 -z^2}{x^2 + y^2 + z^2}
+\]
+Since $\lim\limits_{r \to 0^+} g_{\theta,\varphi}(r)$ depends on $\theta$ and $\varphi$, the limit does not exist.
+
+\vspace{2em}
+
+\section{differentiation}
+\subsection{First partial derivatives}
+
+\vspace{1em}
+
+The process of "partial differentiation" consists of deriving a function of several variables with respect to one of its independent variables.
+
+The result is referred to as the "partial derivative of $f$ with respect to the chosen independent variable.
+
+\vspace{1em}
+
+\begin{definition}
+Let $f : \mathbb{R}^2 \to \mathbb{R}; \quad (a,b) \in \text{Dom}(f)$
+
+1) If the limit $\lim\limits_{h\to 0} \frac{f(a+h,b)- f(a,b)}{h} \in \mathbb{R}$ exists,
+we call it the first partial derivative of $f$ with respect to the first independent variable $x$, denoted by:
+$\dfrac{\partial f}{\partial x}(a,b)$
+
+2) If the limit $\lim\limits_{h\to 0} \frac{f(a,b+h)- f(a,b)}{h} \in \mathbb{R}$ exists,
+we call it the first partial derivative of $f$ at $(a,b)$ with respect to the second independent variable, denoted by:
+$\dfrac{\partial f}{\partial y}(a,b)$
+
+3) We define two functions, $f_x = \frac{\partial f}{\partial x}$ and $\frac{\partial f}{\partial y}$ by:
+\[
+f_x = \frac{\partial f}{\partial x}:  \mathbb{R}^2 \to \mathbb{R}
+\]
+\[
+(x,y) \mapsto  \frac{\partial f}{\partial x} (x,y) = \lim_{h\to 0} \frac{f(x+h,y)- f(x,y)}{h}
+\]
+\[
+f_y = \frac{\partial f}{\partial y}:  \mathbb{R}^2 \to \mathbb{R}
+\]
+\[
+(x,y) \mapsto  \frac{\partial f}{\partial y} (x,y) = \lim_{h\to 0} \frac{f(x,y+h)- f(x,y)}{h}
+\]
+\end{definition}
+
+\vspace{1em}
+
+\subsection*{\underline{example:}}
+1) $f(x,y) = \phi(x)\psi(y)$
+\[
+\frac{\partial f}{\partial x}(x,y) = \phi'(x)\psi(y)
+\]
+\[
+\frac{\partial f}{\partial y}(x,y) = \phi(x)\psi'(y)
+\]
+
+\vspace{2em}
+
+\textbf{\underline{Geometric Interpretation}}
+
+The tangent line of the curve $z = f(x,b)$ at $(a,f(a,b))$ is directed by $(1, 0, \frac{\partial f}{\partial x}(a,b))$
+\[
+\begin{cases}
+z = f(a,b) + (x-a)\frac{\partial f}{\partial x}(a,b) \\
+y = b
+\end{cases}
+\]
+
+The tangent line of the curve $z = f(a,y)$ at $(a,b,f(a,b))$ is directed by $(0,1, \frac{\partial f}{\partial y}(a,b))$
+\[
+\begin{cases}
+z = f(a,b) + (y-b)\frac{\partial f}{\partial y}(a,b) \\
+x = a
+\end{cases}
+\]
+
+The tangent plane of the graph of $f$ at $(a,b,f(a,b))$, denoted by $T_{(a,b,f(a,b))}G_f$
+is defined by 
+\[
+T_{(a,b,f(a,b))}G_f = \{(x,y,z) \in \mathbb{R}^3 : z = f(a,b) + \frac{\partial f}{\partial x}(a,b)(x-a) + \frac{\partial f}{\partial y}(a,b)(y-b)\}
+\]
+
+\vspace{1em}
+
+\begin{definition}
+1) Let
+\[
+f : \mathbb{R}^n \to \mathbb{R}
+\]
+\[
+(x_1,\dots,x_n) \mapsto f(x_1,\dots,x_n)
+\]
+\[
+\forall i \in \{1,2,\dots,n\}, \quad f_{x_i} = \frac{\partial f}{\partial x_i} : \mathbb{R}^n \to \mathbb{R}
+\]
+\[
+(x_1,\dots,x_n) \mapsto \frac{\partial f}{\partial x_i}(x_1,\dots,x_n) = \lim_{h \to 0}\frac{f(x_1,\dots, x_i + h, \dots,x_n)-f(x_1,\dots,x_n)}{h}
+\]
+$\frac{\partial f}{\partial x_i}$ is the $i$-th first derivative of $f$ or the first partial derivative of $f$ with respect to the $i$-th independent variable.
+
+When $m>1$: $f=(f_1,\dots,f_m): \mathbb{R}^n \to \mathbb{R}^m$
+\[
+\forall_{i \in \{1,\dots,n\}}; \frac{\partial f}{\partial x_i} = \left(\frac{\partial f_1}{\partial x_i},\dots,\frac{\partial f_m}{\partial x_i}\right) :\mathbb{R}^n \to \mathbb{R}^m
+\]
+
+The tangent plane of $G_f = \{(x,y) \in \mathbb{R}^n \times \mathbb{R}^m : y = f(x)\}$ at $(a,f(a))$, denoted by $T_{(a,f(a))} G_f$ is:
+\[
+T_{(a,f(a))}G_f = \{(x,y) \in \mathbb{R}^n \times \mathbb{R}^m: y = f(a) + \sum_{i = 1}^n(x_i - a_i)\frac{\partial f}{\partial x_i}(a)\} \subset \mathbb{R}^{n+m}
+\]
+\end{definition}
+
+\vspace{1em}
+
+\textbf{\underline{Example:1}}
+\[
+f: \mathbb{R}^3 \to \mathbb{R}, \quad (x,y,z) \mapsto xy + yz^2 + xz
+\]
+\[
+\frac{\partial f}{\partial x} = y + z, \quad \frac{\partial f}{\partial y} = x + z^2, \quad \frac{\partial f}{\partial z} = 2yz + x
+\]
+
+\vspace{2em}
+
+\subsection{Second Order Partial Derivatives}
+
+\vspace{1em}
+
+\begin{definition}
+1) Let $f : \mathbb{R}^2 \to \mathbb{R}$ and $\dfrac{\partial f}{\partial x}, \dfrac{\partial f}{\partial y}$ its first partial derivatives:
+\[
+f_{xx} = \frac{\partial^2 f}{\partial x^2} = \frac{\partial}{\partial x}\left(\frac{\partial f}{\partial x}\right)(x,y) = \lim_{h \to 0}\frac{\frac{\partial f}{\partial x}(x+h,y)-\frac{\partial f}{\partial x}(x,y)}{h}
+\]
+\[
+f_{xy} = \frac{\partial^2 f}{\partial y\partial x} = \frac{\partial}{\partial y}\left(\frac{\partial f}{\partial x}\right)(x,y) = \lim_{h \to 0}\frac{\frac{\partial f}{\partial x}(x,y + h)-\frac{\partial f}{\partial x}(x,y)}{h}
+\]
+\[
+f_{yx} = \frac{\partial^2 f}{\partial x \partial y} = \frac{\partial}{\partial x}\left(\frac{\partial f}{\partial y}\right)(x,y) = \lim_{h \to 0}\frac{\frac{\partial f}{\partial y}(x+h,y)-\frac{\partial f}{\partial y}(x,y)}{h}
+\]
+\[
+f_{yy} = \frac{\partial^2 f}{\partial y^2} = \frac{\partial}{\partial y}\left(\frac{\partial f}{\partial y}\right)(x,y) = \lim_{h \to 0}\frac{\frac{\partial f}{\partial y}(x,y+h)-\frac{\partial f}{\partial y}(x,y)}{h}
+\]
+
+2) Let $f: \mathbb{R}^n \to \mathbb{R}$ and $\frac{\partial f}{\partial x_i}; i \in \{1,\dots,n\}$ its first partial derivatives.
+
+$\forall i,j \in \{1,\dots,n\}$
+\[
+\frac{\partial^2 f}{\partial x_i\partial x_j}(x_1,\dots,x_n) = \lim_{h \to 0}\frac{\frac{\partial f}{\partial x_j}(x_1,\dots,x_i+h,\dots,x_n)-\frac{\partial f}{\partial x_j}(x_1,\dots,x_n)}{h}
+\]
+
+When $i = j$, $\frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial^2 f}{\partial x_i^2}$ is called the second partial derivative of $f$ with respect to $x_i$.
+
+When $i \neq j$, $\frac{\partial^2 f}{\partial x_i \partial x_j}$ is called the mixed second partial derivative of $f$ with respect to $x_i$ and $x_j$.
+
+There are $n^2$ second partial derivatives of $f$.
+
+3) If $f = (f_1,\dots,f_m) : \mathbb{R}^n \to \mathbb{R}^m$
+\[
+\forall_{i,j} \in \{1,\dots,n\}; \frac{\partial^2 f}{\partial x_i \partial x_j} = \left(\frac{\partial^2 f_1}{\partial x_i \partial x_j},\dots,\frac{\partial^2 f_m}{\partial x_i \partial x_j}\right)
+\]
+\end{definition}
+
+\vspace{1em}
+
+\begin{theorem}[Schwarz's Theorem]
+Let $f: \mathbb{R}^n \to \mathbb{R}^m$.
+
+If $\frac{\partial^2 f}{\partial x_i \partial x_j}$ and $\frac{\partial^2 f}{\partial x_j \partial x_i}$ are continuous on an open subset $D \subset \mathbb{R}^n$, then
+\[
+\frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial^2 f}{\partial x_j \partial x_i} \quad \text{on } D
+\]
+\end{theorem}
+
+\vspace{1em}
+
+\begin{definition}
+\underline{Higher order partial derivatives}
+
+Let  $p \in \mathbb{N}^*; f : \mathbb{R}^n \to \mathbb{R}^m$
+. The p-th partial derivatives  of $f$ are :
+\[
+  \frac{\partial^p f}{\partial x_{i_1}\partial x_{i_2}\dots\partial x_{i_{p-1}}x_{i_p}} := \pd{}{x_{i_1}}(\pd{}{x_{i_2}}(\dots(\pd{f}{x_{i_{p-1}}}(\pd{f}{x_{i_p}})))), \quad \text{ where } i_1,i_2,\dots,i_p \in \{1,2,\dots,n\}
+\]
+\begin{definition}
+1) We say that a function is $C^1$ (of class $C^1$) if all its first partial derivatives are continuous.
+
+2) We say that a function is of class $C^p$ if all its partial derivatives of degree $p$ are continuous.
+
+3) We say that a function is $C^{\infty}$ if all partial derivatives of degree $p$ exist; $\forall p \in \N$.
+\end{definition}
+
+ \textbf{\underline{Corollary}}
+
+ If $f$ is of class $C^p$,
+ all the p-th partial derivatives can be written as 
+
+ \[
+ \frac{\partial^pf}{\partial x_1^{p_1} \partial x_2^{p_2}\dots\partial x_n^{p_n}}\quad \forall p_1,\dots,p_n \in \mathbb{N} \text{ such that } p_1 + p_2 + \dots + p_n = p\]
+\end{definition}
+
+\vspace{1em}
+
+\textbf{\underline{Example:}}
+
+If $f : \mathbb{R}^2 \to \mathbb{R}$ is of class $C^3$, the third partials derivatives are of the form:
+$\dfrac{\partial^3 f}{\partial x^p \partial y^q} \quad \\ \text{where } p+q = 3$
+
+\[
+\begin{aligned}
+\frac{\partial^3 f}{\partial x^3}, \quad \frac{\partial^3 f}{\partial y^3} \\
+\frac{\partial^3 f}{\partial x^2 \partial y} &= \quad \frac{\partial^3 f}{\partial x \partial y \partial x} &= \quad \frac{\partial^3 f}{\partial y \partial x^2} \\
+\frac{\partial^3 f}{\partial y^2 \partial x} &= \quad \frac{\partial^3 f}{\partial y \partial x \partial y} &= \quad \frac{\partial^3 f}{\partial x \partial y^2}
+\end{aligned}
+\]
+
+\vspace{2em}
+
+\subsection{Differentials of a Function}
+
+\vspace{1em}
+
+Recall that if 
+\[
+f: \mathbb{R} \to \mathbb{R}, \quad x \mapsto f(x)
+\]  is derivable function and 
+and $f'$ is its derivative function, then the differential of $f$, denoted $df$, is the function
+\[
+df: \mathbb{R} \to \mathcal{L}(\mathbb{R},\mathbb{R}) = \{\phi : \mathbb{R} \to \mathbb{R} \mid \phi \text{ linear}\}
+\]
+\[
+x \mapsto d_x f: \mathbb{R} \to \mathbb{R}, \quad h \mapsto f'(x) \cdot h
+\]
+
+\vspace{1em}
+
+\begin{definition}
+Let $f : \mathbb{R}^n \to \mathbb{R}^m$ be a function such that all first partial derivatives exist.
+
+Then the differential of $f$ is the function
+\[
+df : \mathbb{R}^n \to \mathcal{L}(\mathbb{R}^n, \mathbb{R}^m)
+\]
+\[
+x \mapsto d_x f : \mathbb{R}^n \to \mathbb{R}^m, \quad h = (h_1,\dots,h_n) \mapsto \sum_{i=1}^n h_i \frac{\partial f}{\partial x_i}(x)
+\]
+\end{definition}
+
+\vspace{1em}
+
+\underline{\textbf{Remark:}}
+If $f: \mathbb{R}^n \to \mathbb{R}^m$ is linear, then:
+\[
+\forall x \in \mathbb{R}^n: \quad d_x f = f
+\]
+
+\vspace{1em}
+
+\underline{\textbf{In Particular:}} $f = \text{pr}_i: (x_1,\dots,x_n) \mapsto x_i$
+\[
+\forall x, d_x f = f = \text{pr}_i = dx_i: \mathbb{R}^n \to \mathbb{R}, \quad (h_1, \dots, h_n) \mapsto h_i
+\]
+If $m = 1$:
+\[
+d_x f = \sum_{i = 1}^n \frac{\partial f}{\partial x_i}(x)  dx_i
+\]
+
+\vspace{1em}
+
+\textbf{\underline{Example:}}
+\[
+f: \mathbb{R}^2 \to \mathbb{R}, \quad (x,y) \mapsto f(x,y)
+\]
+\[
+d_{(x,y)}f = \frac{\partial f}{\partial x}(x,y) dx +  \frac{\partial f}{\partial y}(x,y) dy
+\]
+\[
+df =  \frac{\partial f}{\partial x} dx +  \frac{\partial f}{\partial y} dy
+\]
+$f(x,y) = xy$; \quad $d_{(x,y)}f = y dx + x dy$
+
+\vspace{1em}
+
+Application: $w = f(x_1,\dots,x_n)$; $\Delta w = f(x_1 + \Delta x_1,\dots,x_n + \Delta x_n) - f(x_1,\dots,x_n)$
+
+Then:
+\[
+\Delta w \approx \sum_{i =1}^n \frac{\partial f}{\partial x_i}(x_1,\dots,x_n)\Delta x_i
+\]
+
+\vspace{1em}
+
+\begin{definition}
+\underline{\textbf{Differentiability}}
+
+Let $f : \mathbb{R}^n \to \mathbb{R}^m$, and $a \in  \mathbb{R}^n$
+
+We say that $f$ is differentiable at $a$ if there exists a linear map
+\[
+\mathcal{L}_a:  \mathbb{R}^n \to \mathbb{R}^m, \quad h \mapsto \mathcal{L}_a(h)
+\]
+such that:
+\[
+  \lim_{h \to 0_{\mathbb{R}^n}} \frac{1}{\|h\|} (f(a+h) - f(a) - \mathcal{L}_a(h)) = 0
+\]
+where $\|h\| = \sqrt{h_1^2 +\dots+h_n^2}$.
+\end{definition}
+
+\vspace{1em}
+
+\underline{\textbf{Remark:}}
+If $f$ is differentiable at $(a_1,\dots, a_n)$, then:
+\[
+\forall i \in \{1, \dots,n\}, \text{ if we consider } h = (0,\dots,0,t,0,\dots,0) = te_i
+\]
+\[
+  \lim_{t \to 0} \frac{1}{|t|} (f(a+te_i) - f(a) - \mathcal{L}_a(te_i)) = 0
+\]
+\[
+  \Rightarrow \lim_{t \to 0} \frac{1}{t} (f(a+te_i) - f(a)) = \mathcal{L}_a(e_i)
+\]
+\[
+  \Rightarrow \frac{\partial f}{\partial x_i}(a) = \mathcal{L}_a(e_i) \quad \forall i \in \{1,\dots,n\}
+\]
+\[
+  \mathcal{L}_a(h) = \mathcal{L}_a\left(\sum_{i = 1}^n h_i e_i\right) = \sum_{i=1}^n h_i \mathcal{L}_a(e_i) = \sum_{i = 1}^n h_i \frac{\partial f}{\partial x_i}(a) = d_a f(h)
+\]
+So, $\mathcal{L}_a = d_a f$.
+
+Thus, $f$ is differentiable at $a$ if and only if all its first partial derivatives exist and
+\[
+f(a+h) = f(a) + d_a f(h) + o(\|h\|)
+\]
+where $\lim\limits_{h \to 0_{\mathbb{R}^n}} \dfrac{1}{\|h\|}o(\|h\|) = 0$.
+
+\vspace{1em}
+
+\textbf{\underline{Proposition:}}
+
+If $f: \R^n \to \R^m $ is differentiable at $a$, then $f$ is continuous at $a$.
+
+\underline{{\textbf{Proof:}}}
+By the relation:
+\[f(a +h)- f(a) = d_af(h) + \|h\|\epsilon(h)\]
+where $\lim\limits_{h \to 0_{\R^n}}\epsilon(h) = 0$.
+Since $d_af$ is a linear map, it is continuous, then:
+\[\lim\limits_{h \to 0_{\R^n}}\left[f(a+h) -f(a)\right] = 0 \Leftrightarrow \lim\limits_{x \to a}f(x) = f(a)\]
+
+\vspace{1em}
+
+\textbf{\underline{Example:}}
+\[f(x,y) = \begin{cases}
+  \dfrac{xy^2}{x^2+y^2} & \text{if } (x,y) \neq (0,0)\\
+  0 & \text{if } (x,y)=(0,0)
+\end{cases}\]
+$f$ is continuous at $(0,0)$, because:
+\[|f(x,y)| = |x|\left(\dfrac{y^2}{x^2 + y^2}\right) \le |x| \xrightarrow[(x,y) \to (0,0)]{} 0 \]
+So $\lim\limits_{(x,y) \to (0,0)}f(x,y) = f(0,0)$.
+
+Now check differentiability:
+\[
+\begin{aligned}
+  \pd{f}{x}(0,0) &= \lim_{h \to 0} \frac{f(h,0) - f(0,0)}{h} = 0 \\
+  \pd{f}{y}(0,0) &= \lim_{h \to 0} \frac{f(0,h) - f(0,0)}{h} = 0 \\
+  &\implies d_{(0,0)}f(h_1,h_2) = 0, \quad \forall(h_1,h_2) \in \R^2 \\
+  \lim_{(h_1,h_2) \to (0,0)}&\frac{f(0+h_1, 0+h_2) - f(0,0) - d_{(0,0)}f(h_1,h_2)}{\sqrt{h_1^2+h_2^2}} \\
+  &= \lim_{(h_1,h_2) \to (0,0)}\frac{\frac{h_1h_2^2}{h_1^2+h_2^2}}{\sqrt{h_1^2+h_2^2}} \\
+  &= \lim_{(h_1,h_2) \to (0,0)}\frac{h_1h_2^2}{(h_1^2+h_2^2)^{3/2}}
+\end{aligned}
+\]
+This limit does not exist because along $\gamma: t \mapsto (t,t)$:
+\[
+\frac{t\cdot t^2}{(t^2+t^2)^{3/2}} = \frac{t^3}{(2t^2)^{3/2}} = \frac{t^3}{2\sqrt{2}|t|^3} \to \frac{1}{2\sqrt{2}} \neq 0
+\]
+So $f$ is not differentiable at $(0,0)$.
+
+\vspace{1em}
+
+\underline{\textbf{Remark:}}
+
+If all the first partial derivatives are continuous, then the function is differentiable.
+
+
+\textbf{\underline{Proposition}}
+
+Linear combination, product, quotient, composition of functions of class $C^p$ ($p \in \N \cup\{\infty\}$) are of Class $C^p$.
+
+\begin{theorem}
+  Let $f: \R^n \to \R^m$ differentiable at $a$ and $g: \R^m \to \R^l$ differentiable at $f(a)$, then :
+  \[ g\circ f: \R^n \xrightarrow{f} \R^m \xrightarrow{g} \R^l\]
+  \[x \mapsto f(x) \mapsto g(f(x))\]
+  is differentiable at $a$ and :
+
+  \[d_a(g \circ f) = d_{f(a)}g \circ d_af\]
+  \[d_a(g \circ f) (h)= d_{f(a)}g(d_af(h)) \quad \forall h \in \R^n\]
+\end{theorem}
+
+\begin{definition}
+  Jacobian matrix - Hessian matrix 
+
+  1) Let $f: \R^n \to \R^m$, $x \mapsto (f_1(x),\dots,f_m(x))$ differentiable at $a$, the Jacobian matrix of $f$ at $a$, denoted by $Jac_a(f)$ is the matrix associated with the linear map $d_a f  : \R^n \to \R^m$ with respect to the usual bases of $\R^n$ and $\R^m$:
+
+  \[
+  Jac_a(f) = \begin{pmatrix}
+    \pd{f_1}{x_1}(a) & \pd{f_1}{x_2}(a) & \dots & \pd{f_1}{x_n}(a)\\
+    \pd{f_2}{x_1}(a) & \pd{f_2}{x_2}(a) & \dots & \pd{f_2}{x_n}(a)\\
+    \vdots & \vdots & \ddots & \vdots\\
+    \pd{f_m}{x_1}(a) & \pd{f_m}{x_2}(a) & \dots & \pd{f_m}{x_n}(a)
+  \end{pmatrix}
+  \]
+  \[
+  d_af(h) = Jac_a(f)\begin{pmatrix} h_1 \\ \vdots \\ h_n \end{pmatrix} = \left(\sum_{i =1}^n h_i \pd{f_1}{x_i}(a),\sum_{i =1}^n h_i \pd{f_2}{x_i}(a),\dots, \sum_{i =1}^n h_i \pd{f_m}{x_i}(a)\right)
+  \]
+
+2) Let $f: \R^n \to \R$ such that all second partial derivatives exist at a point $a$. The square matrix
+\[Hess_a(f) = \begin{pmatrix}
+    \pddx{f}{x_1}(a) & \pdd{f}{x_1}{x_2}(a) & \dots & \pdd{f}{x_1}{x_n} (a)\\ 
+    \pdd{f}{x_2}{x_1}(a) & \pddx{f}{x_2}(a) & \dots & \pdd{f}{x_2}{x_n} (a)\\ 
+    \vdots & \vdots & \ddots & \vdots\\ 
+    \pdd{f}{x_n}{x_1}(a) & \pdd{f}{x_n}{x_2}(a) & \dots & \pddx{f}{x_n} (a)
+\end{pmatrix}\]
+is called the Hessian matrix of $f$ at $a$.
+
+\underline{\textbf{Remark:}}
+$n = m = 1 \quad f: \R \to \R$ 
+\[Jac_a(f) = (f'(a)) \quad Hess_a(f)=(f''(a) = \ddd{f}{x}(a))\]
+\end{definition}
+
+\underline{\textbf{Corollary}}
+Chain rule:
+
+\[Jac_a(g \circ f)= Jac_{f(a)}(g)\times Jac_a(f)\] 
+
+\underline{\textbf{Example}}
+\[z : \R \xrightarrow{\gamma} \R^2 \xrightarrow{f} \R\]
+\[t \mapsto (x(t),y(t)) \xrightarrow{f} f(x(t),y(t)) = z(t)\]
+\[
+\begin{aligned}
+  Jac_{(x,y)}f = \left(\pd{f}{x}(x,y),  \pd{f}{y}(x,y)\right) ; \quad Jac_t(\gamma)=\begin{pmatrix}x'(t) \\ y'(t)\end{pmatrix} \\
+  Jac_t(z)=(z'(t)) &= \left(\pd{f}{x}(\gamma(t)),  \pd{f}{y}(\gamma(t))\right) \begin{pmatrix}x'(t) \\ y'(t)\end{pmatrix} \\
+  &= x'(t) \pd{f}{x}(\gamma(t)) + y'(t)\pd{f}{y}(\gamma(t)) \\
+  \text{So: } \dd{z}{t}(t) &= \dd{x}{t}(t)\pd{f}{x}(x(t), y(t)) +\dd{y}{t}(t)\pd{f}{y}(x(t), y(t)) 
+\end{aligned}
+\]
+
+In the case of 3 variables: 
+\[ \dd{w}{t} = \dd{x}{t}\pd{f}{x} +\dd{y}{t}\pd{f}{y} +\dd{z}{t}\pd{f}{z} \]
+
+\vspace{1em}
+
+\[
+\R^2 \xrightarrow{\varphi}\R^2 \xrightarrow{f} \R
+\]
+\[(t,s) \mapsto (x(t,s),y(t,s)) \mapsto f\circ \varphi(t,s) = w(t,s)\]
+
+\[
+\begin{cases}
+  \pd{w}{t} = \pd{x}{t}\pd{f}{x} + \pd{y}{t}\pd{f}{y}\\
+  \pd{w}{s} = \pd{x}{s}\pd{f}{x} + \pd{y}{s}\pd{f}{y}
+\end{cases}
+\]
+
+\vspace{1em}
+\[
+\R^2 \xrightarrow{\varphi}\R^3 \xrightarrow{f} \R
+\]
+\[(t,s) \mapsto (x(t,s),y(t,s), z(t,s)) \mapsto f\circ \varphi(t,s) = w(t,s)\]
+
+\[
+\begin{cases}
+  \pd{w}{t} = \pd{x}{t}\pd{f}{x} + \pd{y}{t}\pd{f}{y} +\pd{z}{t}\pd{f}{z} \\
+  \pd{w}{s} = \pd{x}{s}\pd{f}{x} + \pd{y}{s}\pd{f}{y} + \pd{z}{s}\pd{f}{z}
+\end{cases}
+\]
+
+\underline{\textbf{Example:}}
+\[\varphi(t) = (t^2 - 2t, t^3)\]
+\[f(x,y) = x^2 + 2yx\]
+
+\[
+\begin{cases}
+x(t) = t^2 - 2t \\
+y(t) = t^3
+\end{cases} 
+\quad
+\begin{cases}
+\pd{f}{x}(x,y) = 2x + 2y = 2(x+y) \\
+\pd{f}{y}(x,y) = 2x
+\end{cases} 
+\]
+
+\[
+\begin{aligned}
+  z(t) = (f \circ \varphi)(t) &= (t^2 -2t)^2 + 2t^3(t^2-2t) \\
+                              &= t^4 - 4t^3 + 4t^2 + 2t^5 - 4t^4 \\
+                              &= 2t^5 - 3t^4 - 4t^3 + 4t^2 \\
+  z'(t) &= 10t^4 - 12t^3 -12t^2 + 8t
+\end{aligned}
+\]
+
+Using chain rule:
+\[
+\begin{aligned}
+  z'(t) &= x'(t)\left[2(x(t) + y(t))\right] + y'(t)\cdot 2x(t) \\
+        &= (2t-2)\cdot 2(t^2 - 2t + t^3) + 3t^2\cdot 2(t^2 - 2t) \\
+        &= (2t-2)(2t^3 + 2t^2 - 4t) + 6t^2(t^2 - 2t) \\
+        &= 4t^4 + 4t^3 - 8t^2 - 4t^3 - 4t^2 + 8t + 6t^4 - 12t^3 \\
+        &= 10t^4 - 12t^3 -12t^2 + 8t
+\end{aligned}
+\]
+
+\vspace{2em}
+
+\section{Extrema of function from $\R^2$ to $\R$}
+\subsection{Taylor expansion of $f: \R^2 \to \R$}
+
+\begin{definition}
+  Let $f: \R^2 \to \R$ of class $C^{p+1}$ at $(a,b)$.
+  The Taylor polynomial function of $f$ at $(a,b)$ of degree $p$ is denoted by $T_{(a,b)}^pf$ and is defined as the Taylor polynomial function of degree $p$ at $0$ of the function 
+  \[ \varphi: \R \to \R\]
+  \[t \mapsto f(a+ t(x-a), b + t(y-b))\]
+  evaluated at $t = 1$:
+  \[
+  \begin{aligned}
+  T_{(a,b)}^pf(x,y) &:= T_0^p \varphi(1) = \sum_{i = 0}^p \frac{1}{i!}\varphi^{(i)}(0) \\
+                    &= \varphi(0) + \frac{\varphi'(0)}{1!} + \frac{\varphi''(0)}{2!} + \dots + \frac{\varphi^{(p)}(0)}{p!}
+  \end{aligned}
+  \]
+  \[
+  \begin{aligned}
+  T^p_{(a,b)}f(x,y) &= \sum_{i = 0}^p \frac{1}{i!}\left[\sum_{k = 0}^i \binom{i}{k} \frac{\partial^i f}{\partial x^k\partial y^{i-k}}(a,b)(x-a)^k(y-b)^{i-k}\right] \\
+                    &= f(a,b) + (x-a)\pd{f}{x}(a,b) + (y-b)\pd{f}{y}(a,b) \\
+                    &\quad + \frac{1}{2}\left[(x-a)^2\pddx{f}{x}(a,b) + 2(x-a)(y-b)\pdd{f}{x}{y}(a,b) + (y-b)^2\pddx{f}{y}(a,b)\right] + \dots
+  \end{aligned}
+  \]
+\end{definition}
+
+\vspace{1em}
+
+\[
+\begin{aligned}
+&\begin{cases}
+x(t) = a + t(x-a); \quad  y(t) = b + t(y-b) \\
+\varphi(t) = f(x(t), y(t))
+\end{cases} \\
+&\varphi(0) = f(a + 0(x-a), b+ 0(y-b)) = f(a,b)\\
+&\varphi'(t) = x'(t) \pd{f}{x}(x(t),y(t)) + y'(t) \pd{f}{y}(x(t),y(t)) \\
+&\varphi'(t) = (x-a)\pd{f}{x}(x(t),y(t)) + (y-b) \pd{f}{y}(x(t),y(t)) \\
+&\varphi''(t) = (x-a)\left[x'(t)\pdd{f}{x}{x}(x(t),y(t)) + y'(t)\pdd{f}{x}{y}(x(t),y(t))\right] \\
+&\quad + (y-b)\left[x'(t)\pdd{f}{y}{x}(x(t),y(t)) + y'(t)\pdd{f}{y}{y}(x(t),y(t))\right] \\
+&\quad \vdots
+\end{aligned}
+\]
+
+\begin{definition}
+Taylor expansion of $f: \R^2 \to \R$
+
+\[
+  f(x,y) = T_{(a,b)}^p f(x,y) + \left[(x-a)^2 +(y-b)^2\right]^{p/2}\epsilon_{(a,b)}(x,y)
+\]
+where $\lim\limits_{(x,y) \to (a,b)} \epsilon_{(a,b)}(x,y) = 0$
+\end{definition}
+
+\underline{\textbf{Example:}}
+\[f(x,y)= e^{x+y}\]
+\[
+\begin{aligned}
+  \varphi(t) = f(0+ t(x-0),0+ t(y-0)) = f(tx,ty) = e^{t(x+y)} = e^{t(x+y)}
+\end{aligned}
+\]
+Taylor expansion at $(0,0)$:
+\[
+f(x,y) = 1 + (x+y) + \frac{1}{2}(x+y)^2 + \frac{1}{6}(x+y)^3 + \dots
+\]
+
+\subsection{{Absolute and relative extrema}}
+\begin{definition}
+  Let $f: \R^2 \to \R$ and $(a,b) \in \text{Dom}(f)$; $D \subset \text{Dom}(f)$
+
+  1) We say that $f(a,b)$ is a relative maximum of $f$ if there exists an open subset $V$ with $(a,b)\in V \subset D$ and $f(a,b) \ge f(x,y)$ for all $(x,y) \in V$.
+
+  2) We say that $f(a,b)$ is a relative minimum of $f$ if there exists an open subset $V$ with $(a,b) \in V \subset D$ and $f(a,b) \le f(x,y)$ for all $(x,y) \in V$.
+
+  3) In the two cases above, $f(a,b)$ is a relative extremum of $f$.
+
+  4) If $V = D$; $f(a,b)$ is an absolute extremum of $f$ on $D$.
+\end{definition}
+
+\begin{definition}
+  \underline{Critical points}
+
+$(a,b)\in \text{Dom}(f)$ is a critical point of $f$ if one of the conditions is verified:
+
+\[
+\begin{aligned}
+  1) \pd{f}{x}(a,b) = 0 \quad \text{and} \quad \pd{f}{y}(a,b) = 0 \quad (\text{or } d_{(a,b)}f = 0) \\
+  2) \pd{f}{x}(a,b) \text{ or } \pd{f}{y}(a,b) \text{ doesn't exist}
+\end{aligned}
+\]
+\end{definition}
+
+\underline{\textbf{Proposition:}}
+First order test 
+
+If $f(a,b)$ is a relative extremum of $f$ and $f$ is differentiable at $(a,b)$, then $(a,b)$ is a critical point of $f$, that is:
+\[\pd{f}{x}(a,b) = 0 \text{ and } \pd{f}{y}(a,b) = 0\]
+
+\textbf{Proof:}
+
+Suppose that $f(a,b)$ is a relative minimum of $f$;
+\[
+\begin{aligned}
+&\exists V \text{ such that } f(a,b) \le f(x,y) \quad \forall(x,y) \in V \\
+&\Leftrightarrow f(x,y) - f(a,b) \ge 0 \\
+&\exists \delta>0; (a+h,b) \in V \text{ for all } |h| < \delta; -\delta< h < \delta \\
+&f(a+h,b)-f(a,b) \ge 0 \\
+&\begin{cases}
+  \frac{f(a+h,b)-f(a,b)}{h} \le 0, \quad  -\delta < h < 0 \\
+  \frac{f(a+h,b)-f(a,b)}{h} \ge 0, \quad  0< h < \delta 
+\end{cases}
+\end{aligned}
+\]
+Taking limits:
+\[
+\begin{cases}
+  \lim_{h \to 0^-} \frac{f(a+h,b)-f(a,b)}{h} = \pd{f}{x}(a,b) \le 0 \\
+  \lim_{h \to 0^+} \frac{f(a+h,b)-f(a,b)}{h} = \pd{f}{x}(a,b) \ge 0
+\end{cases}
+\Rightarrow \pd{f}{x}(a,b) = 0
+\]
+
+With the same method, we prove that $\pd{f}{y}(a,b) = 0$.
+
+\underline{\textbf{Remark:}}
+If $(a,b)$ is a critical point of $f$; $f(a,b)$ is not necessarily a relative extremum.
+
+\underline{\textbf{For example:}}
+\[f(x,y) = x^2 - y^2\]
+$\pd{f}{x}(0,0) = 0$ and $\pd{f}{y}(0,0) = 0$
+
+$f(0,0) = 0$ is not a relative extremum because:
+\[
+\begin{cases}
+  f(x,0) = x^2 > 0, \quad \forall x \neq 0 \Rightarrow f(0,0) \text{ is not maximum} \\
+  f(0,y) = -y^2 < 0, \quad \forall y \neq 0 \Rightarrow f(0,0) \text{ is not minimum} 
+\end{cases}
+\]
+
+\begin{theorem}
+\underline{Second order test}
+
+Let $f: \R^2 \to \R$ and $(a,b) \in \text{Dom}(f)$ such that $f$ is of class $C^2$ at $(a,b)$ and $(a,b)$ is a critical point of $f$.
+
+Let $\Delta_0 = \pddx{f}{x}(a,b)\pddx{f}{y}(a,b) - \left[\pdd{f}{x}{y}(a,b)\right]^2$
+
+We have:
+
+  1) If $\Delta_0 > 0  \quad \text{and} \quad  \pddx{f}{x}(a,b) > 0, \text{ then $f(a,b)$ is a relative minimum} $
+
+  2) If $\Delta_0 > 0  \quad \text{and} \quad  \pddx{f}{x}(a,b) < 0, \text{ then $f(a,b)$ is a relative maximum} $ 
+
+  3) If $\Delta_0 < 0  \quad (a,b,f(a,b)) \text{ is a "saddle" point of graph of}$ $f$ 
+
+  ($f(a,b)$ \text{is not a relative extremum of $f$)}
+
+  4) If $\Delta_0 = 0  \quad \text{the test is not conclusive}$
+
+\underline{Proof:}
+Let $A = \pddx{f}{x}(a,b)$; $B = \pdd{f}{x}{y}(a,b)$; $C = \pddx{f}{y}(a,b)$
+
+Using the Taylor expansion of degree 2 at $(a,b)$:
+\[
+\begin{aligned}
+  f(x,y) &= f(a,b) + (x-a)\pd{f}{x}(a,b) + (y-b)\pd{f}{y}(a,b) \\
+         &\quad + \frac{1}{2}\left[A(x-a)^2 + 2B(x-a)(y-b) + C(y-b)^2\right] + o((x-a)^2+(y-b)^2)
+\end{aligned}
+\]
+Since $(a,b)$ is a critical point:
+\[
+f(x,y) - f(a,b) = \frac{1}{2}\left[A(x-a)^2 + 2B(x-a)(y-b) + C(y-b)^2\right] + o((x-a)^2+(y-b)^2)
+\]
+
+Completing the square:
+\[
+\begin{aligned}
+&A(x-a)^2 + 2B(x-a)(y-b) + C(y-b)^2 \\
+&= A\left[(x-a)^2 + 2\frac{B}{A}(x-a)(y-b) + \frac{C}{A}(y-b)^2\right] \\
+&= A\left[\left(x-a + \frac{B}{A}(y-b)\right)^2 + \left(\frac{C}{A} - \frac{B^2}{A^2}\right)(y-b)^2\right] \\
+&= A\left[\left(x-a + \frac{B}{A}(y-b)\right)^2 + \frac{\Delta_0}{A^2}(y-b)^2\right]
+\end{aligned}
+\]
+
+The sign depends on $A$ and $\Delta_0$.
+\end{theorem}
+\underline{\textbf{Example:}}
+
+\underline{Exercise 09:}
+1) 
+\[
+\begin{aligned}
+f(x,y) &= 8 - (x-1)^2 - (y+1)^2 \\
+       &= 8 - \left[(x-1)^2 + (y+1)^2\right]
+\end{aligned}
+\]
+$f(1,-1) = 8$ is absolute maximum of $f$ ($8 = \max_{\R^2}f$).
+
+$f$ has no minimum, because:
+\[\exists(x_n,y_n) = (1, -1+n) \in \R^2 \text{ such that } \lim\limits_{n \to +\infty} f(x_n,y_n) = -\infty\]
+
+Using critical points:
+\[
+\begin{cases}
+\pd{f}{x}(x,y) = -2(x-1) = 0 \\
+\pd{f}{y}(x,y) = -2(y+1) = 0 \\
+\end{cases} \Leftrightarrow \begin{cases}x =1 \\ y = -1\end {cases}
+\]
+$A = -2$; $B= 0$; $C= -2$; $\Delta_0 = 4 > 0$ and $A = -2 < 0$
+
+So $f(1,-1)$ is a relative maximum.
+
+Since $f$ is $C^2$ on $\R^2$ and $(1,-1)$ is the unique critical point, then $f(1,-1)$ is absolute maximum and there is no minimum.
+
+2) $f(x,y) = \sqrt{4x^2 + y^2 + 4} \ge \sqrt{4} = 2 = f(0,0), \quad \forall(x,y) \in \R^2$
+
+Then 2 is absolute minimum of $f$.
+
+And $\lim\limits_{n \to +\infty}f(0,n) = +\infty \implies f$ is not upper bounded.
+
+\underline{Using critical point tests:}
+
+$\pd{f}{x}(x,y) = \dfrac{4x}{\sqrt{4x^2 + y^2 + 4}}$
+; $\pd{f}{y}(x,y) = \dfrac{y}{\sqrt{4x^2 + y^2 + 4}}$
+
+The unique critical point is $(0,0)$.
+
+Compute second derivatives at $(0,0)$:
+\[
+\begin{aligned}
+A &= \lim_{h \to 0} \frac{\pd{f}{x}(h,0) - \pd{f}{x}(0,0)}{h} = \lim_{h \to 0} \frac{\frac{4h}{\sqrt{4h^2 + 4}} - 0}{h} = 2 \\
+B &= \lim_{h \to 0} \frac{\pd{f}{x}(0,h) - \pd{f}{x}(0,0)}{h} = 0 \\
+C &= \lim_{h \to 0} \frac{\pd{f}{y}(0,h) - \pd{f}{y}(0,0)}{h} = \lim_{h \to 0} \frac{\frac{h}{\sqrt{4 + h^2}} - 0}{h} = \frac{1}{2}
+\end{aligned}
+\]
+$\Delta_0 = 2 \cdot \frac{1}{2} - 0^2 = 1 > 0$ and $A = 2 > 0$
+
+So $f(0,0)$ is a relative minimum. Since $(0,0)$ is the unique critical point and $f$ is of class $C^2$ on $\R^2$, then $f(0,0)$ is absolute minimum and there is no maximum.
+
+3)
+\[
+f(x,y) = 10x + 12y - x^2 - y^2 - 64
+\]
+
+\[
+\begin{aligned}
+f(x,y) &= -64 - \left[(x^2 - 10x) + (y^2 - 12y)\right] \\
+       &= -64 - \left[(x-5)^2 - 25 + (y-6)^2 - 36\right] \\
+       &= -64 + 25 + 36 - (x-5)^2 - (y-6)^2 \\
+       &= -3 - (x-5)^2 - (y-6)^2
+\end{aligned}
+\]
+So $f(5,6) = -3$ is the absolute maximum, and there is no minimum.
+\end{document}

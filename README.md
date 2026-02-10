@@ -19,18 +19,51 @@ The repository is organized by course. Each course has its own folder and a main
 
 Structure:
 
-├─ Courses/
-│  ├─ Calculus/
-│  │ ├── main.tex
-│  │ ├── chapters/
-│  │ ├── figures/
-│  │ └── references.bib
-│  ├─ Physics/
-│  │  ├── main.tex
-│  │  ├── chapters/
-│  │  ├── figures/
-│  │  └── references.bib
-│  └── ...
-├─── templates/
-└─── build/
-
+```
+AS-Repository/
+│
+├── Code/
+│   ├── Module 1/
+│   │   ├── Pictures/
+│   │   ├── Chapter 1.tex
+│   │   ├── Chapter 2.tex
+│   │   ├── Chapter 3.tex
+│   │   └── ...
+│   ├── Module 2/
+│   │   ├── Pictures/
+│   │   ├── Chapter 1.tex
+│   │   ├── Chapter 2.tex
+│   │   ├── Chapter 3.tex
+│   │   └── ...
+│   │── Module 3/
+│   │   ├── Pictures/
+│   │   ├── Chapter 1.tex
+│   │   ├── Chapter 2.tex
+│   │   ├── Chapter 3.tex
+│   │   └── ...
+│   └── .../
+│       ├── Pictures/
+│       ├── Chapter 1.tex
+│       ├── Chapter 2.tex
+│       ├── Chapter 3.tex
+│       ├── Chapter 3.tex
+│       └── ...
+│
+└── Courses PDFs/
+    ├── Module 1/
+    │   ├── Chapter 1.pdf
+    │   ├── Chapter 2.pdf
+    │   ├── Chapter 3.pdf
+    │   └── ...
+    ├── Module 2/
+    │   ├── Chapter 1.pdf
+    │   ├── Chapter 2.pdf
+    │   ├── Chapter 3.pdf
+    │   └── ...
+    ├── Module 3/
+    │   ├── Chapter 1.pdf
+    │   ├── Chapter 2.pdf
+    │   ├── Chapter 3.pdf
+    │   └── ...
+    └── ....
+```

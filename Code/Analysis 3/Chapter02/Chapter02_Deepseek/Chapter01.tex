@@ -1,0 +1,766 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{geometry}
+\usepackage{titlesec}
+\geometry{a4paper, margin=1in}
+
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{3d, arrows.meta}
+
+% Theorem environments
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+
+% Paragraph formatting
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{1em}
+
+% Add extra vertical space
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+\title{Chapter 01: Double integrals }
+\author{Notes from prof zeghlaoui course}
+
+\hbadness=10000
+\hfuzz=\maxdimen
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\F}{\mathbb{F}}
+
+% --- Derivatives ---
+\newcommand{\pd}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[3]{\dfrac{\partial^2 #1}{\partial #2\,\partial #3}}
+\newcommand{\pddx}[2]{\dfrac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\dd}[2]{\dfrac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\ddd}[2]{\dfrac{\mathrm{d}^2 #1}{\mathrm{d} #2^2}}
+\newcommand{\diff}{\,\mathrm{d}}
+
+%% vertical vector macro
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+
+\begin{document}
+
+\maketitle
+
+\vspace{2em}
+\section{Reminder:}
+Recall that if $f: \left[a,b\right] \to \R$ is bounded.
+
+for any subdivision $\sigma = \{ x_0=a <x_1< x_2<...< x_{n+1} = b\}$ of  $\left[a,b\right]$
+
+\[S(f,\sigma)= \sum_{i = 1}^{n}M_i(x_i - x_{i-1}) \quad \text{and} \quad s(f,\sigma)= \sum_{i = 1}^{n}m_i(x_i - x_{i-1})\]
+\[\text{where } m_i = \inf_{x \in [x_{i-1},x_i]} f(x), \quad M_i = \sup_{x \in [x_{i-1},x_i]} f(x)\]
+
+called respectively, the upper and the lower Darboux sums of $f$
+on $\left[a, b\right]$ with respect to the subdivision $\sigma$;
+
+$S$: the area of the region plane delimited by:
+\[
+\begin{cases}
+  x=a \quad y = 0 \\
+  x=b \quad y = f(x) \\
+\end{cases}
+\]
+
+(graph showing the lower and upper of an integral)
+
+\[s(f,\sigma) \le S \le S(f,\sigma)\quad \text{if } \sigma_1 \subset \sigma_2,\text{ then:}\]
+\[s(f,\sigma_1)  \le s(f,\sigma_2) \le S \le S(f,\sigma_2) \le S(f,\sigma_1)\]
+
+\[
+S^+ = \inf (S(f,\sigma))\quad , \quad S^- = \sup (s(f,\sigma))
+\]
+
+\[
+S^- \le S \le S^+
+\]
+
+\begin{definition}
+  We say that $f$ is Riemann integrable on $\left[a,b\right]$ if :
+  \[S^+ = S^- = S = \int_a^b f(x)dx\]
+\end{definition}
+
+\begin{definition}
+  Riemann sums
+
+  Let $\sigma$ a subdivision of $\left[a,b\right]$ and $\zeta = \{\zeta_1,\dots,\zeta_n\} \quad / \zeta_i \in \left[x_{i-1}, x_i\right]$
+
+  \[s(f,\sigma) \le R(f,\sigma,\zeta) = \sum_{i=1}^{n}f(\zeta_i)(x_i-x_{i-1}) \le S(f,\sigma)\]
+
+  If $f: \left[a,b\right] \to \R$ is Riemann integrable, then:
+
+  $\exists (\sigma_n)$ a sequence of subdivision of $\left[a,b\right]$
+
+$\exists (\zeta_n)$ associated with 
+$(\sigma_n)[a,b]\quad \zeta_n = (\zeta_n^i),\ \zeta_n^i \in [x_{i-1}^n, x_i^n]$
+
+  $\lim\limits_{n \to \infty}R(f, \sigma_n,\zeta_n) = \int_a^bf(x)dx$
+
+\underline{In particular:}
+\[\sigma_n = \{x_i^n= a + \frac{i}{n}(b-a): i\in {0,\dots,n}\}\]
+\[\lim\limits_{n \to \infty} \frac{b-a}{n} \sum_{i = 1}^{n} f(\zeta_i) = \int_a^b f(x)dx\]
+\[\lim\limits_{n \to \infty} \frac{b-a}{n} \sum_{i = 1}^{n}f(a+ \frac{i}{n}(b-a)) = \int_a^bf(x)dx \quad, x_i^n-x^n_{i-1} = \frac{b-a}{n}\]
+\end{definition}
+
+\section{Double integrals:}
+\subsection{Definition and first properties:}
+
+\begin{definition}
+  Darboux sums- $\quad $ Riemann sums:
+
+  Let $f: \Delta := \left[a,b\right]\times\left[c,d\right] \to \R $  be a bounded function
+
+  1) A subdivision $\sigma$ of $\Delta$ is a set $\sigma = \{\Delta_{ij} = \left[x_{i-1}, x_i\right]\times\left[y_{j-1}, y_j\right] \}$
+
+  with  $(x_i)_{i = 1,\dots,n}$ is a subdivision of $\left[a,b\right]$ and $(y_j)_{j = 0,\dots,m}$ a subdivision of 
+  $\left[c,d\right]$ we note : $A(\Delta_{ij}) = (x_i - x_{i-1})(y_j -y_{j-1})$
+
+  and $\delta(\sigma) = \max_{i,j} \text{diam}(\Delta_{ij})$
+
+  2) 
+  \[\forall i,j \quad M_{ij} = \sup_{(x,y)\in\Delta_{ij}}f(x,y) \quad \text{and} \quad m_{ij} = \inf_{(x,y)\in\Delta_{ij}}f(x,y)\]
+
+  the upper Darboux sum of $f$ with respect to $\sigma$ is :
+  \[S(f,\sigma) = \sum_{i=1}^n\sum_{j=1}^m M_{ij}A(\Delta_{ij})\]
+
+  the lower Darboux sum of $f$ with respect to $\sigma$ is :
+  \[s(f,\sigma) = \sum_{i=1}^n\sum_{j=1}^m m_{ij}A(\Delta_{ij})\]
+
+  3) if we give $\zeta = \{(\zeta_i^1,\zeta_j^2) \mid \zeta_i^1 \in \left[x_{i-1},x_i\right] \text{ and }\zeta_j^2 \in \left[y_{j-1},y_j\right]\}$
+
+  The Riemann sum with respect to $\sigma$ and $\zeta$ is :
+  \[R(f,\sigma,\zeta)= \sum_{i=1}^n\sum_{j=1}^m f(\zeta_i^1,\zeta_j^2)A(\Delta_{ij})\]
+  \[R(f,\sigma,\zeta)= \sum_{i=1}^n\sum_{j=1}^m f(\zeta_i^1,\zeta_j^2)(x_i - x_{i-1})(y_j - y_{j-1})\]
+
+\end{definition}
+
+\subsection{Example:}
+
+\[ f(x,y) = \alpha \quad; \forall(x,y) \in \Delta\]
+\[M_{ij} = m_{ij} = f(\zeta_i^1, \zeta_j^2) = \alpha\]
+\[S(f,\sigma) = s(f, \sigma) = R(f,\sigma, \zeta) = \alpha(b-a)(d-c) = \alpha A(\Delta)\]
+
+\begin{definition}
+  Riemann integrability:
+
+  With the same notations above, we put:
+  \[S^+(f)= \inf(S(f,\sigma)) \quad \text{and} \quad S^-(f)= \sup (s(f,\sigma))\]
+
+We say that $f$ is Riemann integrable on $\Delta$ if $S^+(f) = S^-(f)$
+\[\Leftrightarrow \forall \epsilon > 0; \exists \sigma \quad S(f, \sigma) - s(f, \sigma) < \epsilon\]
+and we denote the common value by $\iint_{\Delta}f(x,y)dxdy$
+\[\Leftrightarrow \exists(\sigma_n) \text{ of subdivisions of } \Delta / \lim S (f, \sigma_n) = \lim s(f, \sigma_n)\]
+
+\underline{Corollary:} if  $f : \Delta = \left[a,b\right]\times\left[c,d\right]$ is Riemann integrable then:
+
+\[\lim\limits_{n \to +\infty} \frac{(b-a)(d-c)}{n^2}\sum_{i=1}^n\sum_{j =1}^n f(a + \frac{i}{n}(b-a),c + \frac{j}{n}(d-c))\]
+\[ = \iint_{\Delta}f(x,y)dxdy\]
+
+\end{definition}
+
+\subsection{Example:}
+\[f(x,y) = x^2 + y^2 \quad,\Delta = \left[0,1\right]^2= \left[0,1\right]\times\left[0,1\right]\]
+
+
+\begin{definition}
+  Riemann integrability on a bounded domain:
+
+  Let $D$ be a bounded subset of $\R^2$ and $ f: D \to \R $ a bounded function.
+
+  We say that $f$ is Riemann integrable on $D$ if for any rectangle $\Delta \supset D$, the function :
+  \[
+    \tilde{f}(x,y) = 
+    \begin{cases}
+      f(x,y) & \text{if } (x,y) \in D \\
+      0 & \text{if } (x,y) \in \Delta \setminus D
+    \end{cases}
+  \]
+
+  is Riemann integrable, in this case :
+  \[ \iint_D f(x,y)dxdy := \iint_{\Delta} \tilde{f}(x,y) dxdy\]
+
+\textbf{Remark:}
+Any continuous function is Riemann integrable.
+
+\subsection{Properties:}
+
+1)\underline{Linearity:}
+If $f,g: D \to \R$ are Riemann integrable then:
+$\forall \alpha,\beta \in \R \quad, \alpha f + \beta g$ is Riemann integrable and 
+\[\iint_D(\alpha f + \beta g)(x,y)dxdy = \alpha\iint_Df(x,y)dxdy + \beta\iint_Dg(x,y)dxdy \]
+
+2)
+
+If $f \ge 0$ on $D \implies \iint_D f(x,y) dxdy \ge 0$
+which is the volume of $\omega = \{(x,y,z) \in \R^3 : (x,y)\in D \text{ and } 0 \le z \le f(x,y)\}$
+
+So; if $f \ge g \implies \iint_D\left[f(x,y) - g(x,y)\right]dxdy$
+
+$= \text{vol}\{(x,y,z) \in \R^3: (x,y) \in D \text{ and } g(x,y) \le z \le f(x,y)\}$ 
+
+3)\underline{Chasles's relation:}
+
+If $D = D_1 \cup D_2$ such that $D_1 \cap D_2$ is at most a curve then:
+\[\iint_Df(x,y)dxdy = \iint_{D_1}f(x,y)dxdy + \iint_{D_2}f(x,y)dxdy \]
+\end{definition}
+
+\begin{definition}
+  $\text{Vol}(D) = A(D) = \iint_Ddxdy$ \quad and the average of $f$ on D is:
+  $\dfrac{1}{\text{Vol}(D)}\iint_Df(x,y)dxdy = \dfrac{\iint_Df(x,y)dxdy }{\iint_D dxdy }$
+\end{definition}
+
+\textbf{\underline{Remark:}}
+
+If  $f \equiv C \quad$, the average of $f$ is $C$
+
+\subsection{Example:}
+
+$D$: the triangle with vertices $(0,0),(1,0),(0,1)$
+(graph) 
+and $f(x,y) = xy $
+\[
+  \tilde{f}(x,y) = 
+  \begin{cases}
+    xy  & \text{if } x+y \le 1 \\
+    0 & \text{if } x+y > 1
+  \end{cases}
+\]
+$\forall x,y \in \left[0,1\right] \times \left[0,1\right]$
+
+\[\iint_D xy dxdy = \lim\limits_{n \to +\infty} \frac{(1-0)(1-0)}{n^2} \sum_{i=1}^n\sum_{j= 1}^n\tilde{f}(\frac{i}{n},\frac{j}{n})\]
+
+\[\lim\limits_{n \to +\infty}\sum_{i =1}^n \left[\sum_{j =1}^n \frac{i}{n}\times\frac{j}{n}\right]\]
+\[U_n = \frac{1}{n^2}\left[\sum_{i=1}^n\sum_{j =1}^n \frac{i}{n}\times\frac{j}{n}\right]\]
+\[U_n = \frac{1}{n^4} \sum_{i = 1}^n i\left[\sum_{j=1}^{n-i}j\right] = \frac{1}{n^4}\sum_{i =1}^n i\left(\frac{(n-i)(n-i+1)}{2}\right) \]
+\[U_n =  \frac{1}{2n^4} \sum_{i=1}^n i (n^2 + i^2 - 2in + n-i) \]
+\[U_n =  \frac{1}{2n^4} \sum_{i = 1}^n \left[i(n^2+n) - i^2(2n+1) +i^3\right]\]
+\[U_n = \frac{1}{2n^4} \left[(n^2 + n)\frac{(n+1)n}{2} -(2n + 1)\frac{n(n+1)(2n +1)}{6} + \frac{n^2(n+1)^2}{4}\right] \]
+\[U_n  = \frac{1}{4}(1 + \frac{1}{n})^2 - \frac{1}{12}(1 + \frac{1}{n})(2 + \frac{1}{n}) + \frac{1}{8}(1 + \frac{1}{n})^2\]
+
+\[\iint_D xy dxdy = \lim\limits_{n \to + \infty} U_n = \frac{1}{4} - \frac{1}{12}\cdot 2  + \frac{1}{8} = \frac{1}{24}\]
+
+\begin{theorem}
+  Fubini's theorem:
+
+  Let $f: D \to \R$ Riemann integrable
+
+  1) if 
+  \[D  = \{(x,y) \in \R^2 : a \le x\le b \text{ and } \exists g_1,g_2: \left[a,b\right] \to \R \text{ continuous}
+    \mid 
+    g_1(x) \le y \le g_2(x), \forall x \in \left[a,b\right]\}
+  \]
+
+  then: $\iint_D f(x,y)dxdy = \int_a^b \left[\int_{g_1(x)}^{g_2(x)}f(x,y)dy\right]dx$
+
+  2) If
+  \[
+    D = \{ (x,y) \in \R^2 : c \le y \le d \text{ and } \exists h_1,h_2: \left[c,d\right] \to \R \text{ continuous}
+    \mid h_1(y) \le x \le h_2(y), \forall y \in \left[c,d\right] \}
+  \]
+
+  then: $\iint_D f(x,y)dxdy = \int_c^d \left[\int_{h_1(y)}^{h_2(y)}f(x,y)dx\right]dy$
+\end{theorem}
+
+\subsection{Remark:}
+We can use the Chasles's formula to apply this theorem.
+
+\subsection{Example 01:}
+\[ D= \{(x,y) \in \R^2 \mid x^2 + y^2 \le R^2\}\]
+\[D_1 = \{(x,y) \in D : y \ge 0\}; D_2 = \{(x,y) \in D: y \le 0\}\]
+\[D_1 = \{ (x,y) \in \R^2 : -R \le x \le R \text{ and } 0 \le y \le \sqrt{R^2 - x^2}\}\]
+\[D_2 = \{ (x,y) \in \R^2 : -R \le x \le R \text{ and } -\sqrt{R^2 - x^2} \le y \le 0 \}\]
+...
+\begin{center}
+\includegraphics[width=0.8\textwidth]{exmaple01.jpg}
+\end{center}
+
+\subsection{Example 02:}
+(trapezoid area proof)
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{example02.jpg}
+\end{center}
+\subsection{Example 03:}
+\[f(x,y) = xy \]
+\[D = \{(x,y) \in \R^2 : x\ge0,y\ge0, x+y \le 1\}\]
+\[D = \{(x,y) \in \R^2 : 0 \le x \le 1 \text{ and } 0 \le y \le 1-x\}\]
+...
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{20251020_104228.jpg}
+\end{center}
+\subsection{Example 04:}
+Let us compute volume of $\Omega$ bounded above by the paraboloid $z = 1 - x^2 -y^2$ and below by the plane $z = 1-y$
+
+
+\begin{center}
+\includegraphics[width=1.4\textwidth, angle=-90]{example04.jpg}
+\end{center}
+
+\section{Change of variables:}
+
+Let S, D two bounded subsets of $\R^2$, $ \R^2 \to \R$ three functions such that :
+
+\[1)\quad (g(u,v),h(u,v)) \in D \subset Dom(f), \forall(u,v) \in S\]
+2) The functions are of class $C^1$
+3) The function $f$ is continuous on $D$; then we have :
+\[\iint_D f(x,y)dxdy = \iint_S f(g(u,v),h(u,v))\left|\pd{g}{u}\pd{h}{v}-\pd{g}{v}\pd{h}{u}\right|dudv\]
+\[\iint_S f(x(u,v),y(u,v))\left|\pd{x}{u}\pd{y}{v}-\pd{x}{v}\pd{y}{u}\right|dudv\]
+\[note: \quad \det(Jac_{(u,v)} (x,y))=\left|\pd{x}{u}\pd{y}{v}-\pd{x}{v}\pd{y}{u}\right|\]
+
+\subsection{Example 01:}
+\[I= \iint \cos{\pi\frac{x-y}{x+y}} dxdy\]
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Change_Var_ex01.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Ch_Var_ex01.jpg}
+\end{center}
+
+\subsection{Particular case: \underline{Polar coordinates:}}
+
+\[
+\begin{cases}
+x(r,\theta) = r\cos(\theta) \\
+y(r,\theta) = r\sin(\theta)
+\end{cases}
+\]
+$r = \sqrt{x^2 +y^2}$ the angle between $\vec{i}$ and $\vec{OM}$
+\[\vec{OM} = x\vec{i} + y\vec{j} \]
+\[\vec{OM} = \sqrt{x^2 + y^2}\left[ \frac{x}{ \sqrt{x^2 + y^2}}\vec{i} + \frac{y}{ \sqrt{x^2 + y^2}}\vec{j}\right]\]
+\[\left(\frac{x}{\sqrt{x^2 + y^2}}\right)^2 + \left(\frac{y}{\sqrt{x^2 + y^2}}\right)^2 =1\]
+\[\exists \theta \in \R \quad / \quad \cos(\theta) = \frac{x}{\sqrt{x^2 + y^2}} = \frac{x}{r} \quad;\quad \sin(\theta) = \frac{y}{\sqrt{x^2 + y^2}} = \frac{y}{r}\]
+
+\[Jac_{(r,\theta)}(x,y) = \begin{pmatrix}
+\cos(\theta) & -r\sin(\theta) \\
+\sin(\theta) & r\cos(\theta)
+\end{pmatrix}\]
+\[= \cos(\theta)(r\cos(\theta)) - \sin(\theta)(-r\sin(\theta))\]
+\[= r\cos^2(\theta) + r\sin^2(\theta) = r> 0\]
+
+\[\iint_D f(x,y)dxdy = \iint_S f(r\cos(\theta),r\sin(\theta))rdrd\theta\]
+
+\subsection{Example 02:}
+
+Calculate elliptic area using double integral:
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{elliptic_area.jpg}
+\end{center}
+
+\subsection{Example 03:}
+
+\subsection{Example: Volume calculation using polar coordinates}
+
+% \textbf{Example:} Let us compute the volume of the solid $\Omega$ bounded above by the surface $z = \sqrt{16 - x^2 - y^2}$ and below by the disk $D$ in the xy-plane.
+%
+% \[
+% \text{vol}(\Omega) = \iint_D \sqrt{16 - x^2 - y^2}  dxdy
+% \]
+%
+% \[
+% D = \{(x, y) \in \R^2 : x^2 + y^2 \leq 4\}
+% \]
+%
+% \begin{center}
+% \begin{tikzpicture}[scale=0.8]
+%     % Axes
+%     \draw[->] (-3,0) -- (3,0) node[right] {$x$};
+%     \draw[->] (0,-1) -- (0,4) node[above] {$z$};
+%
+%     % Sphere surface (upper half)
+%     \draw[thick, blue, domain=0:180] plot ({2*cos(\x)}, {2*sin(\x)+2});
+%     \draw[thick, blue, domain=0:180] plot ({-2*cos(\x)}, {2*sin(\x)+2});
+%
+%     % Disk in xy-plane
+%     \draw[thick, red] (0,0) ellipse (2cm and 0.5cm);
+%     \fill[red!20, opacity=0.3] (0,0) ellipse (2cm and 0.5cm);
+%
+%     % Labels
+%     \node at (2.5,1) {$\sqrt{16 - x^2 - y^2}$};
+%     \node[red] at (2.5,-0.5) {$D: x^2 + y^2 \leq 4$};
+%     \draw[->] (2,2.5) -- (1.5,2.2);
+%
+%     % Dashed lines for clarity
+%     \draw[dashed] (-2,0) -- (-2,2);
+%     \draw[dashed] (2,0) -- (2,2);
+% \end{tikzpicture}
+% \end{center}
+%
+% Using polar coordinates: $x = r\cos\theta$, $y = r\sin\theta$
+%
+% \[
+% \text{vol}(\Omega) = \int_{0}^{2\pi} \int_{0}^{2} r\sqrt{16 - r^2}  dr d\theta
+% \]
+%
+% Let $u = 16 - r^2$, then $du = -2r dr$ or $r dr = -\frac{1}{2} du$
+%
+% When $r = 0$, $u = 16$; when $r = 2$, $u = 12$
+%
+% \begin{align*}
+% \text{vol}(\Omega) &= \int_{0}^{2\pi} d\theta \int_{0}^{2} r\sqrt{16 - r^2}  dr \\
+% &= 2\pi \int_{0}^{2} r\sqrt{16 - r^2}  dr \\
+% &= 2\pi \int_{16}^{12} (-\frac{1}{2}) \sqrt{u}  du \\
+% &= -\pi \int_{16}^{12} \sqrt{u}  du \\
+% &= \pi \int_{12}^{16} u^{1/2}  du \\
+% &= \pi \left[\frac{2}{3}u^{3/2}\right]_{12}^{16} \\
+% &= \frac{2\pi}{3} \left(16^{3/2} - 12^{3/2}\right) \\
+% &= \frac{2\pi}{3} \left(64 - 12\sqrt{12}\right) \\
+% &= \frac{2\pi}{3} \left(64 - 24\sqrt{3}\right)
+% \end{align*}
+%
+% \begin{center}
+% \includegraphics[width=0.8\textwidth]{Calc_Vol2.jpg}
+% \end{center}
+%
+% Compute a volume of a solid $\Omega$
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Calc_Vol1.jpg}
+\end{center}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Calc_Vol2.jpg}
+\end{center}
+
+\subsection{Example 04:}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Ch_Var_04.jpg}
+\end{center}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Ch_Var_04_02.jpg}
+\end{center}
+
+\section{Applications of double integrals}
+\begin{definition}
+
+  Let $\rho: D \to \R$ be a continuous density function of the lamina corresponding to the plane region $D$,
+  the mass $m(D)$ of the lamina is defined by:
+  \[m(D) = \iint_D \rho(x,y)dxdy\]
+\end{definition}
+\underline{\textbf{Remark:}}
+
+if $\rho(x,y) = K, \forall (x,y) \in D, \quad \text{ then } m(D) = K A(D)$
+\begin{example}
+
+  \[\rho: (x,y) = 2x + y\]
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{density_ex01.jpg}
+\end{center}
+\end{example}
+
+\begin{definition}
+  \underline{Moments and center of mass}
+
+  With the same hypothesis and and notations as definition above 
+
+  1) the moment of mass with respect the $x$ and $y$ axes respectively are:
+  \[ M_x = \iint_D y \rho(x,y)dxdy;\quad M_y = \iint_Dx \rho(x,y)dxdy\]
+  the center of mass of $D$ is $(\bar{x},\bar{y}) = (\dfrac{M_y}{m(D)},\dfrac{M_x}{m(D)})$
+
+  2) the second moments, or the moments of inertia of $D$ about the $x$ and $y$ axes respectively are:
+
+  \[I_x=\iint_D y^2\rho(x,y)dxdy;\quad I_y = \iint_D x^2\rho(x,y) dxdy\]
+
+  3) the polar moment is $I_O = I_x+ I_y = \iint_D(x^2 + y^2)\rho(x,y)dxdy$
+\end{definition}
+
+\begin{example}
+  
+  1)
+  \[
+    D = \{(x,y) \in \R^2;\quad 0 \le x \le 1;\quad 0 \le y \le 1\} = \left[0,1\right]\left[0,1\right]
+  \]
+  $\rho(x,y) = 1$
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{moments_ex01.jpg}
+\end{center}
+
+2) \[ \rho(x,y) = 2x + y\]
+(the first line belongs to the first example (the $I_x$ and $I_y$ integrals))
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{moments_ex02_01.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{moments_ex02_02.jpg}
+\end{center}
+\end{example}
+
+\begin{definition}
+  Let $\Sigma = \{(x,y,z) \in \R^3 : \quad (x,y) \in D,\quad z =f(x,y)\}$ be bounded
+  surface, with $f$ a function such that $\pd{f}{x}, \pd{f}{y}$ exist on D then :
+
+  the are of $\Sigma$; $A(\sigma)$ is given by:
+  \[ A(\sigma) = \iint_D \sqrt{1 + (\pd{f}{x}(x,y))^2 + (\pd{f}{y}(x,y))^2}dxdy\]
+\end{definition}
+
+\begin{example}
+\[ 
+  \Sigma =\{ (x,y,z) \in \R^3 : \quad x \ge 0, y \ge 0, z \ge 0\text{ and } x+y+z =1  \}
+\]
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{surface_area_ex01.jpg}
+\end{center}
+\end{example}
+
+
+\begin{example}
+  ...
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{surface_area_ex02_01.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{surface_area_ex02_02.jpg}
+\end{center}
+
+\end{example}
+
+\begin{example}
+  ... \\
+
+ (first two lines) \[
+  S = \{(x,y,z) \in \R^3 : \quad -1 \le x \le 1,\quad -1 \le y \le 1,\quad z = 2 -x^2 - y^2 \}
+\]
+\[
+  f(x,y) = 2-x^2-y^2\quad;\quad\pd{f}{x}(x,y)= -2x\quad;\quad \pd{f}{y} = -2y
+\]
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{surface_area_ex03_01.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{surface_area_ex03_02.jpg}
+\end{center}
+
+\end{example}
+
+\section{Triple Intergrals: }
+\subsection{Definition and Cacluations:}
+
+the triple integral of a function $f: \R^3 \to \R$ on a bounded region $\Omega \subset \R^3$ is defined in the same way as double integrals with the same properties (linearity, Chasles's relation, increasing), we denot this integral by:   $\iiint_\Omega f(x,y,z)dxdydz$
+
+In the particular case $: f \equiv 1 \text{ on }  \Omega$
+\[\iiint_\Omega dx dy  dz= Vol(\Omega)\]
+
+  \begin{theorem}
+    \underline{Evaluation by iterated integrals }
+  \end{theorem}
+
+  If $\Omega = \{(x,y,z) \in \R^3 \mid a \le x \le b \quad;\quad h_1(x) \le y \le h_2(x) \quad;\quad g_1(x,y) \le z \le g_2(x,y) \quad / h_1,h_2, g_1, g_2 \text{ are continuous}\}$
+
+then:
+\[
+  \iiint_\Omega f(x,y,z)dx dy dz = \int_a^b \left[\int_{h_1(x)}^{h_2(x)}\left[\int_{g_1(x,y)}^{g_2{x,y}}f(x,y,z)dz\right]dy\right]dx
+\]
+
+\begin{example}
+\[
+    \Omega = \{(x,y,z)\in \R^3 \mid 0 \le x \le 1 \quad, 0\le y \le 1-x \quad; 0 \le z \le 1-x-y \} 
+\]
+
+\begin{center}
+\includegraphics[width=0.9\textwidth]{Triple_ex01.jpg}
+\end{center}
+\end{example}
+
+\subsection{Change of Variable:}
+
+Let $f : \Omega \to \R$ Riemann-integrable; let $S$ a bounded region of $\R^3$ ;
+$ g_1,g_2,g_3 \in S \to \R$ of class $C^1$
+such that $\forall(y,v,w) \in S; \quad (g_1(u,v,w),g_2(u,v,w),g_3(u,v,w))\in \Omega$
+
+then:
+\[\iint_\Omega f(x,y,z) dx dy dz = \iint_S f(g_1(u,v,w),g_2(u,v,w),g_3(u,v,w)) |det(Jac_{u,v,w}(g_1,g_2,g_3))|dudvdw\]
+
+\[
+det(Jac_{u,v,w}(g_1,g_2,g_3)) = det(Jac_{u,v,w}(x,y,z)) =
+\begin{aligned}
+\begin{vmatrix}
+  \pd{x}{u} &\quad \pd{x}{v} &\quad \pd{x}{w} \\
+  \pd{y}{u} &\quad \pd{y}{v} &\quad \pd{y}{w} \\
+  \pd{z}{u} &\quad \pd{z}{v} &\quad \pd{z}{w} \\
+\end{vmatrix} = 
+\begin{vmatrix}
+  \pd{g_1}{u} &\quad \pd{g_1}{v} &\quad \pd{g_1}{w} \\
+  \pd{g_2}{u} &\quad \pd{g_2}{v} &\quad \pd{g_2}{w} \\
+  \pd{g_3}{u} &\quad \pd{g_3}{v} &\quad \pd{g_3}{w} \\
+\end{vmatrix} 
+\end{aligned}
+\]
+
+\subsection{Two particular cases:}
+
+\underline{First case: Cylindrical coordinated}
+\[
+  \begin{cases}
+  x = rcos(\theta) \\
+  y = rsin(\theta) \quad det(Jac_{(u,v,w)}(x,y,z)) = 
+  \begin{aligned}
+  \begin{vmatrix} 
+    \pd{x}{r} &\quad \pd{x}{\theta}  &\quad \pd{x}{z}\\
+    \pd{y}{r} &\quad \pd{y}{\theta}  &\quad \pd{y}{z}\\
+    \pd{z}{r} &\quad \pd{z}{\theta}  &\quad \pd{z}{z}\\
+    \end{vmatrix}  = 
+    \begin{vmatrix}
+      cos(\theta)&\quad  -rsin(\theta) &\quad  0 \\
+    sin(\theta) &\quad rcos(\theta)  &\quad  0 \\
+    0 &\quad  0 &\quad 1 \\
+    \end{vmatrix} = r
+  \end{aligned} \\
+  z =z  \\
+\end{cases}
+\]
+
+\[\iiint_\Omega f(x,y,z) dx dy dz = \iiint_S r f(rcos(\theta),rsin(\theta),z) dr d\theta dz\]
+
+\underline{second case: spherical coordinates}
+
+\begin{center}
+\includegraphics[width = 0.9\textwidth]{spherical_coordinates.jpg}
+\end{center}
+
+...
+
+\[
+  \begin{aligned}
+  det_{(r,\theta,\varphi)}(x,y,z)&= 
+  \begin{vmatrix}
+    \pd{x}{r} &\quad \pd{x}{\theta} &\quad \pd{x}{\varphi} \\
+    \pd{y}{r} &\quad \pd{y}{\theta} &\quad \pd{y}{\varphi} \\
+    \pd{z}{r} &\quad \pd{z}{\theta} &\quad \pd{z}{\varphi} \\
+  \end{vmatrix} \\
+  &=
+  \begin{vmatrix}
+     sin(\varphi)cos(\theta) &\quad -rsin(\varphi)sin(\theta) &\quad rcos(\varphi)cos(\theta) \\
+     sin(\varphi)sin(\theta) &\quad rsin(\varphi)cos(\theta) &\quad rcos(\varphi)sin(\theta) \\
+    cos(\varphi) &\quad 0 &\quad -rsin(\varphi) \\
+  \end{vmatrix} \\
+  &= r(rsin(\varphi))
+  \begin{vmatrix}
+     sin(\varphi)cos(\theta) &\quad -sin(\theta) &\quad cos(\varphi)cos(\theta) \\
+     sin(\varphi)sin(\theta) &\quad cos(\theta) &\quad cos(\varphi)sin(\theta) \\
+    cos(\varphi) &\quad 0 &\quad -sin(\varphi) \\
+  \end{vmatrix} \\
+  &= -r^2 sin(\varphi)
+  \end{aligned}
+\]
+\[\iiint_\Omega f(x,y,z) dx dy dz = \iint_S r^2sin(\varphi) f(rsin(\varphi)cos(\theta), rsin(\varphi)sin(\theta),rcos(\varphi)) dr d\theta d\varphi\]
+
+\begin{example}
+  \underline{the volume of a ball with radius R:}
+
+\begin{center}
+\includegraphics[width=0.9\textwidth]{Triple_Ball_Volume.jpg}
+\end{center}
+\end{example}
+
+
+\begin{example}
+\underline{Compute the volume of Intersection between ball and cylinder}
+Using cylindrical coordinates :
+\[\Omega = \{(x,y,z)\in \R^3 \mid x^2 + y^2 + z^2 \le 4 \text{ and } x^2 + y^2 \le 2y\]
+  \begin{center}
+  \includegraphics[width = 0.9\textwidth]{Triple_ball_cyl.jpg}
+  \end{center}
+\end{example}
+\begin{example}
+  Use spherical coordinates to compute the volume of the region D bounded by the upper nappe of the cone 
+  $z^2 = x^2 + y^2$ and above by  the sphere $x^2 + y^2 +z^2 = 9$:
+
+  \begin{center}
+  \includegraphics[width = 0.9\textwidth]{Sphere_coordinates_ex.jpg}
+  \end{center}
+
+\end{example}
+
+\subsection{Applications of triple integrals}
+
+1) If $f : D \to \R_+$ is a  positive function on a bounded region $ D \subset \R^2$ ; then:
+\[ \iint_D f(x,y)dxdy = \iint_D\left[\int_0^{f(x,y)}dz\right]dxdy = \iiint_\Omega dxdydz = Vol(\Omega)\]
+
+Where $\Omega = \{(x,y,z) \in \R^3 \mid (x,y) \in D \text{ and } 0 \le z\le f(x,y)\}$
+
+2) Consider the solid $\Omega \subset \R^3$ bounded with the mass density function 
+
+$\rho : \Omega \to \R \quad,(x,y,z) \mapsto \rho (x,y,z)$  
+
+the mass of $\Omega$ is $m = \iiint_\Omega \rho(x,y,z) dxdydz$
+
+In particular if $\rho \equiv K \implies m = k Vol(\Omega)$
+
+the center of mass $(\bar{x},\bar{y},\bar{z})$ is: 
+\[
+\begin{cases}
+  \bar{x} = \dfrac{\iiint_\Omega x\rho(x,y,z) dxdydz}{\iiint_\Omega \rho(x,y,z) dxdydz} \\
+  \bar{y} = \dfrac{\iiint_\Omega y\rho(x,y,z) dxdydz}{\iiint_\Omega \rho(x,y,z) dxdydz} \\
+  \bar{z} = \dfrac{\iiint_\Omega z\rho(x,y,z) dxdydz}{\iiint_\Omega \rho(x,y,z) dxdydz} \\
+\end{cases}
+\]
+
+$M_{yz}, M_{xz} \text{ and }M_{xy}$ are called the first moments of $\Omega$  with respect the 
+$(yz)- \quad,(xz) -\quad,\text{ and }(xy)$planes respectively
+
+3)
+\[
+ I_{xy}   = \iiint_\Omega z^2\rho(x,y,z) dxdydz 
+\]
+\[ 
+I_{xz}   = \iiint_\Omega y^2\rho(x,y,z) dxdydz 
+\]
+\[
+I_{yz}   = \iiint_\Omega x^2\rho(x,y,z) dxdydz
+\]
+
+are the second moments (or moments of inertia) of $\Omega$  with respect the planes 
+
+$(yz)- \quad,(xz) -\quad,\text{ and }(xy)$ respectively
+
+$I_x= I_{xy} + I_{xz} = \iiint_\Omega (y^2 + z^2) \rho(x,y,z) dx dy dz\quad $ the moment of inertia with respec the axe (ox) 
+
+$I_y= I_{xy} + I_{yz} = \iiint_\Omega (x^2 + z^2) \rho(x,y,z) dx dy dz\quad $ the moment of inertia with respec the axe (oy) 
+
+$I_z= I_{xz} + I_{yz} = \iiint_\Omega (x^2 + y^2) \rho(x,y,z) dx dy dz\quad $ the moment of inertia with respec the axe (oz) 
+
+\begin{example}
+  \[\Omega = \{(x,y,z) \in \R^3 \mid z \ge 0 \text{ and } x^2+y^2+z^2 \le 4\}\]
+
+  \begin{center}
+  \includegraphics[width = 0.9\textwidth]{Triple_moment_inertia_ex.jpg}
+  \end{center}
+
+  \begin{center}
+  \includegraphics[width = 0.9\textwidth]{Triple_moment_inertia_ex02.jpg}
+  \end{center}
+  the last result equals $\frac{8\pi k}{3}$ not $\frac{32 \pi k}{3}$ 
+
+  \begin{center}
+  \includegraphics[width = 0.9\textwidth]{Triple_moment_inertial_ex03.jpg}
+  \end{center}
+\end{example}
+
+
+
+\end{document}
